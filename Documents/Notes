@@ -1,0 +1,18 @@
+using vite + react
+using typescript
+using tailwind css
+using post css
+using autofixer
+
+exposed to network using  --host
+
+Font: Poppins
+Material Symbols: Outlined, Rounded, Sharp
+
+Color Scheme: light dark;
+
+Added @ pathing
+
+
+
+
