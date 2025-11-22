@@ -1,7 +1,6 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Policy from '@/components/policy_&_conditions/Privacy_Policy';
 import Terms from '@/components/policy_&_conditions/Terms_&_Conditions';
-import BG from '@/bg/BG2';
 import './styles/Policy_&_Conditions.css';
 
 
@@ -16,39 +15,38 @@ export default function PolicyPage() {
 
 	/* === UI === */
 	return (
-		<div className="policy page">
-			{/*** Background ***/}
-			<BG />
+		<div className="policy page-container">		
+			<div className="page">
+				{/*** Logo ***/}
+				<img className="logo" src="/images/mit-logo.png" />
 
-			{/*** Logo ***/}
-			<img className="logo" src="/images/mit-logo.png" />
+				{/*** Footer Links ***/}
+				<div className="footer-links">
+					<Link to="/privacy-policy">Privacy Policy</Link>
+					<p className="separator">|</p>
+					<Link to="/terms-&-conditions">Terms & Conditions</Link>
+				</div>
 
-			{/*** Footer Links ***/}
-			<div className="footer-links">
-				<a href="/privacy-policy">Privacy Policy</a>
-				<p className="separator">|</p>
-				<a href="/terms-&-conditions">Terms & Conditions</a>
-			</div>
+				{/*** Content Container ***/}
+				<div className="container">
+					{/* Back Button 1 */}
+					<button className="back-btn a" onClick={() => navigate('/login')}>
+						<span className="material-symbols-rounded">arrow_back_ios</span>
+						Return
+					</button>
 
-			{/*** Content Container ***/}
-			<div className="container">
-				{/* Back Button 1 */}
-				<button className="back-btn a" onClick={() => navigate('/login')}>
-					<span className="material-symbols-rounded">arrow_back_ios</span>
-					Return
-				</button>
+					{/* Show Privacy Policy */}
+					{onPolicy && <Policy />}
 
-				{/* Show Privacy Policy */}
-				{onPolicy && <Policy />}
+					{/* Show Terms & Conditions */}
+					{onTerms && <Terms />}
 
-				{/* Show Terms & Conditions */}
-				{onTerms && <Terms />}
-
-				{/* Back Button 2 */}
-				<button className="back-btn b" onClick={() => navigate('/login')}>
-					<span className="material-symbols-rounded">arrow_back_ios</span>
-					Return
-				</button>
+					{/* Back Button 2 */}
+					<Link to="/login" className="back-btn b">
+						<span className="material-symbols-rounded">arrow_back_ios</span>
+						Return
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

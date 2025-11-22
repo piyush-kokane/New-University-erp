@@ -1,123 +1,124 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect, useState, type ReactElement } from 'react'
 import { Toaster, toast } from "react-hot-toast";
+import useInactivityLogout from "@/hooks/useInactivityLogout";
 import { useUser } from "@/hooks/useUser";
+
+import PageNotFound from "@pages/PageNotFound";
 import Dashboard from '@pages/student/Dashboard'
 import LoginPage from '@pages/Login'
 import PolicyPage from '@pages/Policy_&_Conditions';
+
 import Navbar from '@components/Navbar'
+import Sidebar from '@components/Sidebar'
 import SettingsPanel from '@panels/Settings';
-import BG from '@/bg/BG1'
+
+import BG1 from '@/bg/BG1';
+import BG2 from '@/bg/BG2';
+
 import './index.css'
 
 
 
-// Protected pages for student
-const studentRoutes = [
-  { name: "Dashboard",     icon: "dashboard",     path: "/dashboard",     component: <Dashboard />,     status: "active" },
-  { name: "Profile",       icon: "person",        path: "/profile",       component: <Dashboard />,       status: "active" },
-  { name: "Attendance",    icon: "check_circle",  path: "/attendance",    component: <Dashboard />,    status: "active" },
-  { name: "Calendar",      icon: "event",         path: "/calendar",      component: <Dashboard />,      status: "active" },
-  { name: "Time Table",    icon: "schedule",      path: "/timetable",     component: <Dashboard />,    status: "active" },
-  { name: "Course",        icon: "menu_book",     path: "/course",        component: <Dashboard />,        status: "active" },
-  { name: "Result",        icon: "bar_chart",     path: "/result",        component: <Dashboard />,        status: "active" },
-  { name: "Circulars",     icon: "campaign",      path: "/circulars",     component: <Dashboard />,     status: "hidden" },
-  { name: "Notifications", icon: "notifications", path: "/notifications", component: <Dashboard />, status: "hidden" },
-];
+ /* ---------------------------------------------------------------------------------------------------- */
+/* ===== Routes ===== */
 
-// Protected pages for faculty
-const facultyRoutes = [
-  { name: "Dashboard",     icon: "dashboard",     path: "/dashboard",     component: <Dashboard />,     status: "active" },
-  { name: "Profile",       icon: "person",        path: "/profile",       component: <Dashboard />,       status: "active" },
-  { name: "Attendance",    icon: "check_circle",  path: "/attendance",    component: <Dashboard />,    status: "active" },
-  { name: "Calendar",      icon: "event",         path: "/calendar",      component: <Dashboard />,      status: "active" },
-  { name: "Time Table",    icon: "schedule",      path: "/timetable",     component: <Dashboard />,    status: "active" },
-  { name: "Circulars",     icon: "campaign",      path: "/circulars",     component: <Dashboard />,     status: "hidden" },
-  { name: "Notifications", icon: "notifications", path: "/notifications", component: <Dashboard />, status: "hidden" },
-];
+	const studentRoutes = [
+		{ name: "Dashboard",     icon: "dashboard",     path: "/dashboard",     component: <Dashboard />,     status: "active" },
+		{ name: "Profile",       icon: "person",        path: "/profile",       component: <Dashboard />,       status: "active" },
+		{ name: "Attendance",    icon: "check_circle",  path: "/attendance",    component: <Dashboard />,    status: "active" },
+		{ name: "Calendar",      icon: "event",         path: "/calendar",      component: <Dashboard />,      status: "active" },
+		{ name: "Time Table",    icon: "schedule",      path: "/timetable",     component: <Dashboard />,    status: "active" },
+		{ name: "Course",        icon: "menu_book",     path: "/course",        component: <Dashboard />,        status: "active" },
+		{ name: "Result",        icon: "bar_chart",     path: "/result",        component: <Dashboard />,        status: "active" },
+		{ name: "Circulars",     icon: "campaign",      path: "/circulars",     component: <Dashboard />,     status: "hidden" },
+		{ name: "Notifications", icon: "notifications", path: "/notifications", component: <Dashboard />, status: "hidden" },
+	];
 
-// Protected pages for admin
-const adminRoutes = [
-  { name: "Dashboard",     icon: "dashboard",     path: "/dashboard",     component: <Dashboard />,        status: "active" },
-  { name: "Calendar",      icon: "event",         path: "/calendar",      component: <Dashboard />, status: "active" },
-  { name: "Time Table",    icon: "schedule",      path: "/timetable",     component: <Dashboard />, status: "active" },
-  { name: "Circulars",     icon: "campaign",      path: "/circulars",     component: <Dashboard />, status: "active" },
-  { name: "Notifications", icon: "notifications", path: "/notifications", component: <Dashboard />, status: "hidden" },
-];
+	const facultyRoutes = [
+		{ name: "Dashboard",     icon: "dashboard",     path: "/dashboard",     component: <Dashboard />,     status: "active" },
+		{ name: "Profile",       icon: "person",        path: "/profile",       component: <Dashboard />,       status: "active" },
+		{ name: "Attendance",    icon: "check_circle",  path: "/attendance",    component: <Dashboard />,    status: "active" },
+		{ name: "Calendar",      icon: "event",         path: "/calendar",      component: <Dashboard />,      status: "active" },
+		{ name: "Time Table",    icon: "schedule",      path: "/timetable",     component: <Dashboard />,    status: "active" },
+		{ name: "Circulars",     icon: "campaign",      path: "/circulars",     component: <Dashboard />,     status: "hidden" },
+		{ name: "Notifications", icon: "notifications", path: "/notifications", component: <Dashboard />, status: "hidden" },
+	];
 
-// all available routes 
-const allRoutes: { [key: string]: string } = {
-  landing: "/",
+	const adminRoutes = [
+		{ name: "Dashboard",     icon: "dashboard",     path: "/dashboard",     component: <Dashboard />,        status: "active" },
+		{ name: "Calendar",      icon: "event",         path: "/calendar",      component: <Dashboard />, status: "active" },
+		{ name: "Time Table",    icon: "schedule",      path: "/timetable",     component: <Dashboard />, status: "active" },
+		{ name: "Circulars",     icon: "campaign",      path: "/circulars",     component: <Dashboard />, status: "active" },
+		{ name: "Notifications", icon: "notifications", path: "/notifications", component: <Dashboard />, status: "hidden" },
+	];
 
-  login: "/login",
-
-  policy: "/privacy-policy",
-  conditions: "/terms-&-conditions",
-};
+	// Public Routes 
+	const publicRoutes: { [key: string]: string } = {
+		landing: "/",
+		login: "/login",
+		policy: "/privacy-policy",
+		conditions: "/terms-&-conditions",
+	};
 
 
 
+ /* ---------------------------------------------------------------------------------------------------- */
 /* ===== Main Function ===== */
 export default function App() {
-  const { user } = useUser();
+	const location = useLocation();
+  const { user, loggingOut } = useUser();
 
-  // To check on which type of page user is
-  const [onUnknown, setOnUnknown] = useState(false);
-  const [onLanding, setOnLanding] = useState(false);
-  const [onLogin, setOnLogin] = useState(false);
-  const [onPolicy, setOnPolicy] = useState(false);
-
-  // To check if page contents is being fetch
-  const [isLoadingPage, setLoadingPage] = useState(false);
-
+	
+	/* === UI State === */
+	const [activePage, setActivePage] = useState('');
   const [profilePanel, setProfilePanel] = useState(false);
-  const toggleProfilePanel  = () => setProfilePanel(!profilePanel);
-
   const [notificationPanel, setNotificationPanel] = useState(false);
-  const toggleNotificationPanel = () => setNotificationPanel(!notificationPanel);
-
   const [settingsPanel, setSettingsPanel] = useState(false);
-  const toggleSettingsPanel = () => setSettingsPanel(!settingsPanel);
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
 
-  // Set protectedRoutes based on Role
+	/* === Toggle UI State === */
+  const toggleProfilePanel  = () => setProfilePanel(prev => !prev);
+  const toggleNotificationPanel = () => setNotificationPanel(prev => !prev);
+  const toggleSettingsPanel = () => setSettingsPanel(prev => !prev);
+  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+
+
+  /* === Role Based Routes === */
   const Role = user?.Role;
-  const protectedRoutes = Role === "admin" ? adminRoutes : Role === "faculty" ? facultyRoutes : studentRoutes;
-
-  // Add protectedRoutes to routes
-  protectedRoutes.forEach((route) => {
-    const key = route.name;
-    allRoutes[key] = route.path;
-  });
-
-  // Convert to a Set for quick lookup
-  const knownRoutes = new Set(Object.values(allRoutes));
+  const protectedRoutes = Role === 'admin' ? adminRoutes : Role === 'faculty' ? facultyRoutes : studentRoutes;
+  const protectedRoutesSet = new Set(protectedRoutes.map(r => r.path));	// Set of Protected Routes (for quick lookup)
 
 
-  // Update states when route changes
+	
+  /* === Page Flags ===*/
+  const onProtected = protectedRoutesSet.has(location.pathname); // if user is on protected page
+  const onLanding = location.pathname === publicRoutes.landing; // if user is on landg page
+  const onLogin = location.pathname === publicRoutes.login; 	 // if user is on login page
+  const onPolicy = 																						// if user is on privacy-policy or terms-&-conditions page
+    location.pathname === publicRoutes.policy ||
+    location.pathname === publicRoutes.conditions;
+	const onUnknown = !onLanding && !onProtected && !onLogin && !onPolicy // if user is on unknown page
+
+
+  /* === Update Active Page ===*/
   useEffect(() => {
-    setOnUnknown(!knownRoutes.has(location.pathname));      // if user is on unknown page set onUnknown to true
-    setOnLanding(location.pathname === allRoutes.landing); // check if user is on landg page if yes set onLanding to true
-    setOnLogin(location.pathname === allRoutes.login);    // check if user is on landg page if yes set onLogin to true
-    setOnPolicy(                                         // check if user is on privacy-policy or terms-&-conditions page if yes set onPolicy to true
-      location.pathname === allRoutes.policy || 
-      location.pathname === allRoutes.conditions
-    );
+    const currentPage = protectedRoutes.find(i => i.path === location.pathname);
+    setActivePage(currentPage?.name || '');
   }, [location.pathname]);
 
 
-  // Check if user is loggedin
-  function ProtectedRoute({ element }: { element: ReactElement }) {
-    // Page contexts is being fetched
-    if (isLoadingPage) return <p>Loading...</p>;
+	/* === Inactivity - Auto Logout === */
+	useInactivityLogout();
 
+
+  /* === Check if user is loggedin === */
+  function ProtectedRoute({ element }: { element: ReactElement }) {
     // If not loggedin redirect to login page
-    if (!user) {
-      toast.error("Please Login first");
-      return <Navigate to={allRoutes.login} state={{ from: location.pathname }} replace />;
+    if (!user && !loggingOut) {
+      toast.error('Please Login first');
+      return <Navigate to={publicRoutes.login} state={{ from: location.pathname }} replace />;
     }
 
     // else return element
@@ -125,45 +126,59 @@ export default function App() {
   }
 
 
+	/* === UI === */
   return (
     <>
+			{/*** Toaster ***/}
       <Toaster position="top-center" reverseOrder={false} />
 
+      {/*** Backgrounds ***/}
+      {onProtected && <BG1 />}
+      {(onLogin || onPolicy || onUnknown) && <BG2 />}
 
-      {/* Show Navigation & BG for Landing Page only */}
-      {/* onLanding && <><L_Navigation /></> /*}
+			{/*** Settings Panel ***/}
+      {(settingsPanel && onProtected) &&
+        <SettingsPanel onClose={toggleSettingsPanel} />
+      }
 
+      {/*** Navbar + Sidebar for Landing Page ***/}
+      {/* onLanding && 
+				<>
+					<L_Navigation />
+				</>
+			*/}
 
-      {/* Show Navigation & BG for Protected Pages only */}
-      {(!onLanding && !onLogin && !onPolicy && !onUnknown) && 
+      {/*** Navbar + Sidebar for Protected Pages ***/}
+      {onProtected && 
         <>
-          <BG />
           <Navbar
-            isMenuActive={sidebarOpen}
+            sidebarOpen={sidebarOpen}
+						activePage={activePage}
             onMenuClick={toggleSidebar}
             onNotificationsClick={toggleNotificationPanel}
             onSettingsClick={toggleSettingsPanel}
             onProfileClick={toggleProfilePanel}
           />
+					<Sidebar 
+						sidebarOpen={sidebarOpen}
+						menuItems={protectedRoutes}
+						activeMenuItem={activePage}
+						setSideBarOpen={setSidebarOpen}
+					/>
         </>
       }
-
-
-      {(settingsPanel && !onLogin && !onPolicy && !onUnknown) &&
-        <SettingsPanel onClose={toggleSettingsPanel}/>
-      }
       
-
+			{/*** Routes ***/}
       <Routes>
         {/* Landing page */}
-        <Route path={allRoutes.landing} element={<Dashboard />} />
+        <Route path={publicRoutes.landing} element={<Dashboard />} />
         
         {/* Login page */}
-        <Route path={allRoutes.login} element={<LoginPage />} />
+        <Route path={publicRoutes.login} element={<LoginPage />} />
                 
         {/* privacy-policy & terms-&-conditions */}
-        <Route path={allRoutes.policy} element={<PolicyPage />} />
-        <Route path={allRoutes.conditions} element={<PolicyPage />} />
+        <Route path={publicRoutes.policy} element={<PolicyPage />} />
+        <Route path={publicRoutes.conditions} element={<PolicyPage />} />
 
         {/* Protected pages */}
         {protectedRoutes.map(({ name, path, component }) => (
@@ -172,10 +187,10 @@ export default function App() {
             path={path}
             element={<ProtectedRoute element={component} />}
           />
-        ))}
+        ))}	
 
         {/* Unknown  Page */}
-        <Route path="*" element={<Dashboard />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   )

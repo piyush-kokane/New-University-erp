@@ -1,0 +1,122 @@
+.sidebar {
+	position: fixed;
+	top: 56px;
+	left: 0;
+	width: 70px;
+	height: calc(100% - 56px);
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 10px;
+	z-index: 10;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: var(--sidebar-close-color);
+	transition: width 0.3s ease-in-out, background 0.3s ease, box-shadow 0.3s ease, margin 0.3s ease-in-out;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	.menu {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.item {
+		display: flex;
+		padding: 12px;
+		outline: none;
+		border-radius: 8px;
+		background-color: transparent;
+		color: var(--text-primary-color);
+		transition: background 0.3s ease;
+
+		.icon {
+			font-size: 24px;
+			transition: transform 0.1s ease;
+		}
+
+		.text {
+			flex: 1;
+			opacity: 0;
+			font-size: 16px;
+			text-align: left;
+			margin-left: 10px;
+			visibility: hidden;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, font-weight 0.1s ease-in-out;
+		}
+
+		&:hover {
+			background: var(--sidebar-hover-color);
+			box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+			.icon {
+				transform: scale(1.1);
+			}
+
+			.text {
+				font-weight: bold;
+			}
+		}
+	}
+
+	.item.active {
+		background: var(--sidebar-active-color);
+		color: var(--sidebar-active-text-color);
+		box-shadow: none;
+		border-radius: 0px;
+		border-left: 4px solid var(--sidebar-accent-color);
+		margin-left: -10px;
+		margin-right: -10px;
+		padding-left: 18px; /* new padding = (old padding + left margin - border-left) = (12+10-4) = 18 */
+		transition: padding-left 0.3s ease, margin 0.3s ease, border-left 0.3s ease, border-radius 0.3s ease, background 0.3s ease;
+		cursor: default;
+
+		.icon {
+			transform: scale(1.1);
+		}
+
+		.text {
+			font-weight: bold;
+		}
+	}
+
+	.logout-btn {
+		background: none;
+		margin: 2px;
+		transition: all 0.3s ease, color 0.3s ease;
+
+		&:hover {
+			background: #ff4444;
+			color: whitesmoke;
+		}
+	}
+}
+
+.sidebar.open {
+	width: 200px;
+	margin-left: 0px;
+	background: var(--sidebar-open-color);
+	box-shadow: 5px 0px 15px rgba(200, 200, 200, 0.1);
+
+	.text {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.item.active {
+		padding-left: 30px;
+	}
+}
+
+@media (max-width: 768px) { /* For small screens */
+	.sidebar {
+		margin-left: -70px;
+	}
+}

@@ -1,31 +1,19 @@
-.login.page {
-	padding: 0;
+.login.page-container {
+	top: 0;
+	left: 0;
+	width: 100%;
+  height: 100%;
+
+	.page {
+		justify-content: center;
+	}
 
 	.logo {
 		position: absolute;
-		width: 150px;
+		width: 200px;
 		height: auto;
 		top: 10px;
 		left: 20px;
-	}
-
-	.footer-links {
-		font-family: Arial, Helvetica, sans-serif;
-		position: absolute;
-		font-size: 14px;
-		display: flex;
-		bottom: 10px;
-		left: 20px;
-		gap: 8px;
-
-		a:not(:hover) {
-			color: white;
-		}
-
-		.separator {
-			color: rgba(150, 150, 150, 0.6);
-			pointer-events: none;
-		}
 	}
 }
 
@@ -50,7 +38,6 @@
 	}
 
 	.input-group {
-		position: relative;
 		display: flex;
 		gap: 12px;
 		padding: 12px 15px;
@@ -67,7 +54,7 @@
 	}
 
 	.input-field {
-		flex: 1;
+		width: 100%;
 		font-size: 16px;
 		outline: none;
 		border: none;
@@ -97,13 +84,23 @@
 		align-items: center;
 		justify-content: space-between;
 		margin-bottom: 15px;
+		font-size: 14px;
 	}
 
 	.remember-me {
 		display: flex;
-		font-size: 14px;
 		align-items: center;
+		cursor: pointer;
 		gap: 5px;
+
+		&:hover p {
+			text-decoration: underline;
+		}
+
+		&:hover input[type='checkbox'] {
+			border-color: #ccc;
+			background: rgba(255, 255, 255, 0.25);
+		}
 	}
 
 	.remember-me input[type='checkbox'] {
@@ -115,11 +112,6 @@
 		border-radius: 3px;
 		border: 1px solid rgba(255, 255, 255, 0.3);
 		background: rgba(255, 255, 255, 0.2);
-
-		&:hover {
-			border-color: #ccc;
-			background: rgba(255, 255, 255, 0.25);
-		}
 
 		&:checked {
 			background-color: var(--accent-color);
@@ -140,8 +132,9 @@
 	}
 
 	.forgot-password {
-		font-size: 14px;
-		color: white;
+		&:not(:hover) {
+			color: white;
+		}
 	}
 
 	.login-btn {
