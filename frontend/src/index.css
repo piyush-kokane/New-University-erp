@@ -357,7 +357,30 @@ body {
 	}
 }
 
+._empty,
+._error,
+._loading {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  font-size: 18px;
+  opacity: 0.8;  
+}
 
+._empty {
+	opacity: 0.5; 
+}
+
+._error {
+	color: red;
+}
+
+._loading::after {
+	content: "";
+	animation: dot-cycle 1.2s infinite steps(1);
+}
 
 
 /* Scrollbar  */

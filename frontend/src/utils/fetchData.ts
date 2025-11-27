@@ -1,9 +1,7 @@
-import { useUser } from '@/hooks/useUser';
-import toast from 'react-hot-toast';
-
-
-/* ===== Util Function ===== */
-export async function fetchData<T>(endpoint: string): Promise<T | null> {
+export async function fetchData<T>(
+	endpoint: string,
+  onLogout?: (status: number) => void
+): Promise<T | null> {
 	try {
 		await new Promise(resolve => setTimeout(resolve, 2000)); // simulate server delay
 
@@ -17,7 +15,7 @@ export async function fetchData<T>(endpoint: string): Promise<T | null> {
 			const errorBody = await res.json();
 			throw {
 				status: res.status,
-				message: errorBody?.message || "Server error"
+				message: errorBody?.message || "Server error",
 			};
 		}
 		
@@ -26,12 +24,10 @@ export async function fetchData<T>(endpoint: string): Promise<T | null> {
 	}
 	catch (error: any) {
 		// Handle token expiration
-		/*if (error.status === 401) {
-			console.warn('🔴 Token expired or invalid. Logging out...');
-			toast.error('Session expired. Please log in again');
-			logout();
+		if (error.status === 401) {
+			if (onLogout) onLogout(401);
 			return null;
-		}*/
+		}
 
 		console.error('Error fetching ' + endpoint, error);
 		return null;

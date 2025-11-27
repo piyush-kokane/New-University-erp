@@ -1,17 +1,30 @@
+import { authMiddleware } from '../middleware/authMiddleware.js';
+import User from '../models/user.js';
+import jwt from 'jsonwebtoken';
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import User from '../models/user.js';
+import crypto from 'crypto';
 
 const router = express.Router();
 
-/* ===== Generate Signed Url ===== */
-function generateSignedImageURL(filename) {
-	const token = jwt.sign({ file: filename }, process.env.JWT_SECRET, { expiresIn: "18h" });
+const tokenExpiry = '18h';
+
+
+/* ================ Generate Signed Url ================ */
+function generateSignedImageURL(userId, sessionId, filename) {
+	// Sign image token
+	const token = jwt.sign(
+		{ id: userId, sessionId: sessionId, file: filename },
+		process.env.JWT_SECRET,
+		{ expiresIn: tokenExpiry }
+	);
+
+	// Get Secure Image Access
 	return `/api/image/${filename}?token=${token}`;
 }
 
-/* ===== LOGIN ===== */
+
+/* ================ LOGIN ================ */
 router.post('/login', async (req, res) => {
 	const { username, password } = req.body;
 	const now = new Date();
@@ -28,12 +41,21 @@ router.post('/login', async (req, res) => {
 		// Log
 		console.log(` ● User '${username}' loged in at: ${now}`);
 
+		// Session ID
+    const newSessionId = crypto.randomUUID();
+    user.sessionId = newSessionId;
+    await user.save();
+
 		// Sign token
-		const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '18h' });
+		const token = jwt.sign(
+			{ id: user._id, sessionId: newSessionId },
+			process.env.JWT_SECRET,
+			{ expiresIn: tokenExpiry }
+		);
 
 		// Signed URLs
-		const profileURL = generateSignedImageURL(user.userData.profile);
-    const bannerURL  = generateSignedImageURL(user.userData.banner);
+		const profileURL = generateSignedImageURL(user._id, newSessionId, user.userData.profile);
+    const bannerURL  = generateSignedImageURL(user._id, newSessionId, user.userData.banner);
 
 		// Copy userData
 		const userObj = { ...user.userData._doc };
@@ -50,5 +72,23 @@ router.post('/login', async (req, res) => {
 		res.status(500).json({ message: 'Server error' });
 	}
 });
+
+
+/* ================ LOGOUT ================ */
+router.post('/logout', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    // Invalidate all tokens by generating new session ID
+    user.sessionId = crypto.randomUUID();
+    await user.save();
+
+    return res.json({ message: 'Logged out successfully' });
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Error logging out' });
+  }
+});
+
 
 export default router;

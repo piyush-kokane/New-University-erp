@@ -73,13 +73,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 	/* === Login with JWT token === */
 	async function login(username: string, password: string) {
+		setLoggingIn(true);
+
 		try {
-			setLoggingIn(true);
-		  
-			/* Simulate server delay */
+			// Simulate server delay
 			//await new Promise(resolve => setTimeout(resolve, 2000)); // 2s
 
-			/* Validate user credentials */
+			// Validate user credentials
 			const response = await fetch('/api/auth/login', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -88,6 +88,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 			const data: ApiResponse = await response.json();
 
+			// If error
 			if (!response.ok) {
 				throw {
 					status: response.status,
@@ -95,15 +96,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 				};
 			}
 
-			/* Clear localStorage except "theme" */
+			// Clear localStorage except 'theme'
 			const theme = localStorage.getItem('theme');
 			localStorage.clear();
 			if (theme) localStorage.setItem('theme', theme);
 
-			/* Remove user */
+			// Remove user
 			setUser(null);
 
-			/* Save JWT token + login time + user */
+			// Save JWT token + login time + user
 			localStorage.setItem('token', data.token);
 			localStorage.setItem('loginTime', Date.now().toString());
 			localStorage.setItem('user', JSON.stringify(data.userData));
@@ -129,32 +130,54 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 
 	/* === Logout === */
-	function logout(status?:number) {
+	async function logout(status?:number) {
 		setLoggingOut(true);
-		
-		if (status === 401) {
-			toast.error('Session expired. Please log in again');
-			console.warn('🔴 Token expired or invalid. Logging out...');
-		}
-		else if (status === 440) {
-			toast.error('Logging out due to inactivaty');
-			console.warn('🔴 Logging out due to inactivaty');
-		}
-		else {
-			toast.success('Logged out successfully');
-			console.log('🔴 Logged out');
-		}
 
-		/* Clear localStorage except "theme" */
-		const theme = localStorage.getItem('theme');
-		localStorage.clear();
-		if (theme) localStorage.setItem('theme', theme);
+		try {
+			const token = localStorage.getItem('token');
 
-		/* Remove user */
-		setUser(null);
+			const res = await fetch('/api/auth/logout', {
+				method: 'POST',
+				headers: { Authorization: `Bearer ${token}` },
+			});
 
-		/* Navigate to login page */
-		navigate('/login', { state: { from: location.pathname }, replace: true });
+			// If error
+			if (!res.ok) throw new Error;
+
+			// Log based on status
+			if (status === 401) {
+				toast.error('Session expired. Please log in again');
+				console.warn('🔴 Token expired or invalid. Logging out');
+			}
+			else if (status === 440) {
+				toast.error('Logging out due to inactivaty');
+				console.warn('🔴 Logging out due to inactivaty');
+			}
+			else {
+				toast.success('Logged out successfully');
+				console.log('🔴 Logged out');
+			}
+
+			// Clear localStorage except 'theme'
+			const theme = localStorage.getItem('theme');
+			localStorage.clear();
+			if (theme) localStorage.setItem('theme', theme);
+
+			// Remove user
+			setUser(null);
+
+			// Navigate to login page
+			navigate('/login', { state: { from: location.pathname }, replace: true });
+		}
+		catch (error: any) {
+			toast.error('Error logging out. Please try again');
+			console.error('🔺 Error logging out');
+		}
+		finally {
+			// setLoggingOut(false);
+			// set loging out flag to false only after login page is loaded
+			// done in Login.tsx
+		}
 	}
 
 

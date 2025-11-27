@@ -4,33 +4,47 @@ using tailwind css
 using post css
 using autofixer
 
-using Vite proxy for automated backend call
-
-exposed to network using  --host
 
 Font: Poppins
 Material Symbols: Outlined, Rounded, Sharp
 Material Icons: Plain, Two-Toned
 
+
 Color Scheme: light dark;
+
+
+Added @ pathing
+
+
+exposed to network using  --host
+
+
+using Vite proxy for automated backend call
+
 
 Break Points
 	1024px - column-count: 2 → 1
 	768px - Sidebar collapse
 	640px - Searchbar coollapse
 
-Added @ pathing
 
 Added 404 Page-Not-Found page
 
-JWT token expires after 18hr
+
 Auto logout after 1hr of inactivity 
 
-Signed URL's for protected images
-expires in 18hr
+JWT token expires after 18hr
+
+Signed URL's for protected images, Expires after 18hr
+
+implemented SessionId's
+creates new SessionId on login & logout
+so on logout all JWT's get invalid
+
 
 can login to another account without logout
 new login overites previous data 
+
 
 logout has status
 console.log & toast accordingly
@@ -38,6 +52,7 @@ console.log & toast accordingly
 	401 - Token expired or invalid
 	440 - Logging out due to inactivaty
 	else - Logged out successfully
+
 
 While loging out stores url of pages
 So after login redirects to page which redirected to '/login'
