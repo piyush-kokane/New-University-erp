@@ -1,0 +1,116 @@
+.policy.page-container {
+	top: 0;
+	left: 0;
+	width: 100%;
+  height: 100%;
+
+	.page {
+		padding: 100px 30px 200px 30px;
+		justify-content: center;
+		text-align: justify;
+		gap: 100px;
+
+		.container {
+			margin: 0;
+			max-width: 1000px;
+			padding: 30px 30px 60px 30px;
+			background: white;
+			color: black;
+		}
+	}
+
+	.logo {
+		width: 150px;
+	}
+
+	/* For small screens */
+	@media (max-width: 768px) {
+		.logo {
+			width: 120px;
+		}
+	}
+
+	/* For extra small screens */
+	@media (max-width: 480px) {
+		.logo {
+			width: 80px;
+		}
+	}
+
+	.back-btn {
+		position: absolute;
+		display: flex;
+		font-size: 20px;
+		font-weight: normal;
+		text-decoration: none;
+		align-items: center;
+		line-height: 1em;
+		gap: 4px;
+	}
+
+	.back-btn.a {
+		top: -48px;
+		left: 0px;
+	}
+
+	.back-btn.b {
+		bottom: 30px;
+		right: 40px;
+	}
+}
+
+.policy .container {
+	overflow: visible !important;
+
+	span {
+		font-size: 18px;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: bold;
+		margin-bottom: 15px;
+	}
+
+	h1 {
+		font-size: 2rem;
+	}
+	h2 {
+		font-size: 1.7rem;
+	}
+	h3 {
+		font-size: 1.4rem;
+	}
+	h4 {
+		font-size: 1.2rem;
+	}
+	h5 {
+		font-size: 1rem;
+	}
+	h6 {
+		font-size: 0.9rem;
+	}
+
+	p {
+		font-size: 1rem;
+		margin-bottom: 15px;
+	}
+
+	ul,
+	ol {
+		padding-left: 25px;
+		margin-bottom: 15px;
+	}
+	ul li {
+		list-style-type: disc;
+		margin-bottom: 8px;
+	}
+	ol li {
+		list-style-type: decimal;
+		margin-bottom: 8px;
+	}
+}

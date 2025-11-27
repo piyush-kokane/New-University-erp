@@ -1,0 +1,8 @@
+._loading {
+	display: flex;
+	flex: 1;
+	align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.8;  
+}
