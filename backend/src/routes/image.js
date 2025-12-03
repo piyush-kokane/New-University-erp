@@ -7,7 +7,8 @@ import fs from 'fs';
 const router = express.Router();
 
 
-/* ================ Get Secure Image Access ================ */
+
+/* ===================== Get Secure Image Access ===================== */
 router.get('/:filename', async (req, res) => {
 	const { filename } = req.params;
 	const { token } = req.query;

@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { useUser } from '@/hooks/useUser';
-import toast from 'react-hot-toast';
 
 
-/* ===== Main Function ===== */
-export default function useInactivityLogout() {
+
+/* ===================== MAIN FUNCTION ===================== */
+export const useInactivityLogout = () => {
+	const { logout, user } = useUser();
+
 	const inactivityLimit = 60 * 60 * 1000; // 1 hour
 	const warningTime = 55 * 60 * 1000; // 55 min
-	const { logout, user } = useUser();
+
 
 	useEffect(() => {
 		if (!user) return; 
@@ -29,7 +32,7 @@ export default function useInactivityLogout() {
 				if (now - last >= warningTime) {
 					// Warning
 					console.warn('🟠 Inactivaty Alert');
-          toast.error("Inactivity Alert: You will be logged out soon.");
+					toast.error('Inactivity Alert: You will be logged out soon.');
 				}
 			}, warningTime);
 
@@ -57,4 +60,4 @@ export default function useInactivityLogout() {
 			clearTimeout(logoutTimer);
 		};
 	}, [user, logout]);
-}
+};

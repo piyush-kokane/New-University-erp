@@ -5,7 +5,8 @@ import express from 'express';
 const router = express.Router();
 
 
-/* ================ Get Notifications ================ */
+
+/* ===================== Get Notifications ===================== */
 router.get('/', authMiddleware, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id);

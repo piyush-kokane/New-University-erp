@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 
-/* ===== UserData Interface ===== */
-interface UserDataType {
+
+/* ===================== TYPES ===================== */
+type UserData = {
 	role: string;
 	status: string;
 	fullName: string;
@@ -20,26 +21,24 @@ interface UserDataType {
 	biotag: string;
 	longBio: string;
 	shortBio: string;
-}
+};
 
-
-/* ===== API Response Interface ===== */
-interface ApiResponse {
+type ApiResponse = {
 	token: string;
-	userData: UserDataType;
+	userData: UserData;
 	message?: string;
-}
+};
 
-
-/* ===== Login Error Interface ===== */
-interface LoginError {
+type LoginError = {
 	status: number;
 	message: string;
-}
+};
 
-/* ===== Context Interface ===== */
+
+
+/* ===================== PROPS ===================== */
 interface UserContextType {
-	user: UserDataType | null;
+	user: UserData | null;
 	loggingIn: boolean;
 	loggingOut: boolean;
 	setLoggingOut: (value: boolean) => void;
@@ -48,31 +47,34 @@ interface UserContextType {
 }
 
 
-/* ===== Context Setup ===== */
+
+/* ===================== CONTEXT SETUP ===================== */
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 
-/* ===== Context Provider ===== */
+
+/* ===================== HELPER FUNCTION ===================== */
+const getUser = (): (UserData | null) => {
+	const userData = localStorage.getItem('user');
+	return userData
+		? JSON.parse(userData) // parse string from localStorage
+		: null; // else return null
+};
+
+
+
+/* ===================== CONTEXT PROVIDER ===================== */
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const [user, setUser] = useState<UserDataType | null>(getUser);
+	const [user, setUser] = useState<UserData | null>(getUser);
 	const [loggingIn, setLoggingIn] = useState(false);
 	const [loggingOut, setLoggingOut] = useState(false);
 
 
-	/* === Get user on mount === */
-	function getUser() {
-		const userData = localStorage.getItem('user');
-		return userData
-			? JSON.parse(userData) // parse string from localStorage
-			: null; // else return null
-	}
-
-
-	/* === Login with JWT token === */
-	async function login(username: string, password: string) {
+	/* ___ Login With JWT Token ___ */
+	const login = async (username: string, password: string) => {
 		setLoggingIn(true);
 
 		try {
@@ -126,11 +128,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		finally {
 			setLoggingIn(false);
 		}
-	}
+	};
 
 
-	/* === Logout === */
-	async function logout(status?:number) {
+	/* ___ Logout ___ */
+	const logout = async (status?: number) => {
 		setLoggingOut(true);
 
 		try {
@@ -178,10 +180,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			// set loging out flag to false only after login page is loaded
 			// done in Login.tsx
 		}
-	}
+	};
 
 
-	/* === return === */
+	/* ====== Return ====== */
 	return (
 		<UserContext.Provider value={{ user, loggingIn, loggingOut, setLoggingOut, login, logout }}>
 			{children}
@@ -190,7 +192,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 };
 
 
-/* ===== Custom Hook ===== */
+
+/* ===================== CUSTOM HOOK ===================== */
 export const useUser = () => {
 	const context = useContext(UserContext);
 	if (!context) throw new Error('useUser must be used within a UserProvider');

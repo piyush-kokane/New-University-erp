@@ -54,3 +54,19 @@
 		}		
 	}
 }
+
+.searchbar.light {
+	color: black;
+
+	input::placeholder {
+		color: black;
+	}
+}
+
+.searchbar.dark {
+	color: white;
+
+	input::placeholder {
+		color: white;
+	}
+}

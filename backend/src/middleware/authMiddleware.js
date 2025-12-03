@@ -2,7 +2,8 @@ import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
 
 
-/* ================ Verify sessionId + JWT ================ */
+
+/* ===================== Verify sessionId + JWT ===================== */
 export async function authMiddleware(req, res, next) {
 	const token = req.headers.authorization?.split(' ')[1];
 

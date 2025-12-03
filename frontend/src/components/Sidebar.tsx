@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/hooks/useUser';
+import { useUI } from '@/hooks/useUI';
+
 import './styles/Sidebar.css';
 
 
-/* ===== Type for menuItems ===== */
+
+/* ===================== TYPES ===================== */
 type MenuItem = {
 	name: string;
 	icon: string;
@@ -12,53 +15,55 @@ type MenuItem = {
 };
 
 
-/* ===== Interface ===== */
+
+/* ===================== PROPS ===================== */
 interface SidebarProps {
-	sidebarOpen: boolean;
 	menuItems: MenuItem[];
-	activeMenuItem: string;
-	setSideBarOpen: (value: boolean) => void;
 }
 
 
-/* ===== Main Function ===== */
-export default function Sidebar({
-	sidebarOpen,
-	menuItems,
-	activeMenuItem,
-	setSideBarOpen,
-}: SidebarProps) {
 
+/* ===================== MAIN FUNCTION ===================== */
+export default function Sidebar({ menuItems }: SidebarProps) {
 	const navigate = useNavigate();
+
 	const { logout } = useUser();
 
+	const {
+		activePage,
+		sidebarOpen,
+		setSidebarOpen,
+	} = useUI();
 
-	/* === Handle logout logic === */
+
+	/* ___ Handle Logout Logic ___ */
 	const handleLogout = () => {
-		setSideBarOpen(false)
-    logout();
-  };
+		setSidebarOpen(false);
+		logout();
+	};
 
 	
-	/* === UI === */
+	/* ====== UI ====== */
 	return (
 		<div
 			className={`sidebar ${sidebarOpen ? 'open' : ''}`}
-			onMouseEnter={() => setSideBarOpen(true)}
-			onMouseLeave={() => setSideBarOpen(false)}
+			onMouseEnter={() => setSidebarOpen(true)}
+			onMouseLeave={() => setSidebarOpen(false)}
 		>
+
+			{/* Menu Button */}
 			<nav className="menu">
 				{menuItems.map((item: MenuItem) =>
-					item.status === 'active' || item.path === location.pathname ? ( // only show Active Tabs
-						<button
-							key={item.name}
-							className={`item ${activeMenuItem === item.name ? 'active' : ''}`}
-							onClick={() => navigate(item.path)}
-						>
-							<span className="material-icons icon">{item.icon}</span>
-							<span className={`text ${sidebarOpen ? 'visible' : ''}`}>{item.name}</span>
-						</button>
-					) : null
+					((item.status === 'active') || (item.path === location.pathname)) // only show active tabs
+						? <button
+								key={item.name}
+								className={`item ${activePage === item.name ? 'active' : ''}`}
+								onClick={() => navigate(item.path)}
+							>
+								<span className="material-icons icon">{item.icon}</span>
+								<span className={`text ${sidebarOpen ? 'visible' : ''}`}>{item.name}</span>
+							</button>
+						: null
 				)}
 			</nav>
 
@@ -67,6 +72,7 @@ export default function Sidebar({
 				<span className="material-icons icon">logout</span>
 				<span className={`text ${sidebarOpen ? 'visible' : ''}`}>Logout</span>
 			</button>
+
 		</div>
 	);
 }

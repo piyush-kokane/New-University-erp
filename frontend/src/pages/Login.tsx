@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
 import { useRef, useEffect, useState, type FormEvent, type RefObject } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import { useUser } from '@/hooks/useUser';
-import toast from 'react-hot-toast';
+
 import './styles/Login.css';
 
 
-/* ===== Main Function ===== */
+
+/* ===================== MAIN FUNCTION ===================== */
 export default function LoginPage() {
 	const { login, loggingIn, setLoggingOut } = useUser();
 
@@ -18,54 +20,52 @@ export default function LoginPage() {
 	const [passwordError, setPasswordError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-
-	/* === Ref for input fields === */
 	const usernameRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 
-	/* === Reset logout flag on mount === */
+	/* ___ Reset Logout Flag on Mount ___ */
 	useEffect(() => {
 		setLoggingOut(false);
 	}, []);
 
 	
-	/* === Set error fields + input focus + toast === */
-	function setErrorFields(
+	/* ___ Set Error Fields + Input Focus + Toast ___ */
+	const setErrorFields = (
 		msg: string,
 		ref: RefObject<HTMLInputElement | null>,
 		setter: (v: boolean) => void
-	) {
+	) => {
 		setErrorMsg(msg);
 		ref.current?.focus();
 		setter(true);
 		toast.error(msg);
-	}
+	};
 
 
-	/* === Handle login logic === */
-	async function handleLogin(e: FormEvent) {
-		e.preventDefault();	// Prevent page refresh
+	/* ___ Handle Login Logic ___ */
+	const handleLogin = async (e: FormEvent) => {
+		e.preventDefault();	// prevent page refresh
 
-		// reset error flags
+		// Reset error flags
 		setUsernameError(false);
 		setPasswordError(false);
 		setErrorMsg(null);
 
-		// check if username or password is empty
+		// Check if username or password is empty
 		if (username.trim() === '') {
-			setErrorFields("Username cannot be empty", usernameRef, setUsernameError);
+			setErrorFields('Username cannot be empty', usernameRef, setUsernameError);
 			return;
 		}
 		if (password.trim() === '') {
-			setErrorFields("Password cannot be empty", passwordRef, setPasswordError);
+			setErrorFields('Password cannot be empty', passwordRef, setPasswordError);
 			return;
 		}
 
-		// call login fron useUser
+		// Call login from useUser
 		const loginError = await login(username, password);
 
-		// if error
+		// If error
 		if (loginError) {
 			if (loginError.status === 400) {
 				setErrorFields(loginError.message, usernameRef, setUsernameError);
@@ -74,30 +74,32 @@ export default function LoginPage() {
 				setErrorFields(loginError.message, passwordRef, setPasswordError);
 			}
 		}
-	}
+	};
 
 
-	/* === UI === */
+	/* ====== UI ====== */
 	return (
 		<div className="login page-container">	
 			<div className="page">
-				{/*** Logo ***/}
+				
+				{/*** LOGO ***/}
 				<img src="/images/mit-logo-banner1.png" alt="MIT WPU" className="logo" />
 
-				{/*** Footer Links ***/}
+				{/*** FOOTER LINKS ***/}
 				<div className="footer-links">
-					<Link to="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</Link> {/* open link in new tab with security*/}
+					<Link to="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</Link> {/* open link in new tab with security */}
 					<p className="separator">|</p>
-					<Link to="/terms-&-conditions" target="_blank" rel="noopener noreferrer">Terms & Conditions</Link> {/* open link in new tab with security*/}
+					<Link to="/terms-&-conditions" target="_blank" rel="noopener noreferrer">Terms & Conditions</Link> {/* open link in new tab with security */}
 				</div>
 
-				{/*** Login Form ***/}
+				{/*** LOGIN FORM ***/}
 				<form className="login-container" onSubmit={handleLogin}>
+
 					{/* Header */}
 					<h1>Login to MIT-WPU</h1>
 
 					{/* Username Input */}
-					<div className={`input-group ${usernameError ? "error" : ""}`}>
+					<div className={`input-group ${usernameError ? 'error' : ''}`}>
 						<input
 							ref={usernameRef}
 							type="text"
@@ -116,7 +118,7 @@ export default function LoginPage() {
 					</div>
 
 					{/* Password Input */}
-					<div className={`input-group ${passwordError ? "error" : ""}`}>
+					<div className={`input-group ${passwordError ? 'error' : ''}`}>
 						<input
 							ref={passwordRef}
 							type={showPassword ? 'text' : 'password'}
@@ -163,7 +165,9 @@ export default function LoginPage() {
 							<span className="material-symbols-rounded spin">progress_activity</span>
 						</div>
 					)}
+
 				</form>
+
 			</div>
 		</div>
 	);

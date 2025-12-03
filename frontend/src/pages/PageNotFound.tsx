@@ -1,25 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import Searchbar from '@/components/Searchbar';
 import './styles/PageNotFound.css';
 
 
-/* ===== Main Function ===== */
+
+/* ===================== MAIN FUNCTION ===================== */
 export default function PageNotFound() {
 	return (
 		<main className="pnf page-container">		
 			<div className="page">
-				{/*** Searchbar ***/}
+
+				{/*** SEARCHBAR ***/}
 				<div className="searchbar-holder">
-					<Searchbar />
+					<Searchbar forceTheme="dark"/>
 				</div>
 
-				{/*** Text ***/}
+				{/*** TEXT ***/}
 				<div className="text">
 					<h1>404</h1>
 					<h2>Page Not Found</h2>
 				</div>
 
-				{/*** Footer Links ***/}
+				{/*** FOOTER LINKS ***/}
 				<div className="footer-links text-[18px]!">
 					<div className="footer-line" />
 					<p className="head">Go to:</p>
@@ -32,6 +34,7 @@ export default function PageNotFound() {
 
 					<Link to="/e-library" replace>E-Library</Link>
 				</div>
+				
 			</div>
 		</main>
 	);

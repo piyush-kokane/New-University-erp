@@ -10,7 +10,8 @@ const router = express.Router();
 const tokenExpiry = '18h';
 
 
-/* ================ Generate Signed Url ================ */
+
+/* ===================== Generate Signed Url ===================== */
 function generateSignedImageURL(userId, sessionId, filename) {
 	// Sign image token
 	const token = jwt.sign(
@@ -24,7 +25,8 @@ function generateSignedImageURL(userId, sessionId, filename) {
 }
 
 
-/* ================ LOGIN ================ */
+
+/* ===================== LOGIN ===================== */
 router.post('/login', async (req, res) => {
 	const { username, password } = req.body;
 	const now = new Date();
@@ -74,7 +76,8 @@ router.post('/login', async (req, res) => {
 });
 
 
-/* ================ LOGOUT ================ */
+
+/* ===================== LOGOUT ===================== */
 router.post('/logout', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);

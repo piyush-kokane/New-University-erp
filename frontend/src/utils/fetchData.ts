@@ -2,8 +2,9 @@ export async function fetchData<T>(
 	endpoint: string,
   onLogout?: (status: number) => void
 ): Promise<T | null> {
+
 	try {
-		await new Promise(resolve => setTimeout(resolve, 2000)); // simulate server delay
+		// await new Promise(resolve => setTimeout(resolve, 2000)); // simulate server delay
 
 		const token = localStorage.getItem('token'); // get token
 
@@ -15,7 +16,7 @@ export async function fetchData<T>(
 			const errorBody = await res.json();
 			throw {
 				status: res.status,
-				message: errorBody?.message || "Server error",
+				message: errorBody?.message || 'Server error',
 			};
 		}
 		

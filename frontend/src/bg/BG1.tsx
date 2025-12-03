@@ -3,7 +3,7 @@ import './styles/BG.css';
 export default function BG() {
 	return (
 		<div className="bg">
-			{/* Background image */}
+			{/* Background Image */}
 			<img src="/images/bg.png" className="bg-image invertable" />
 
 			{/* Background Overlay */}

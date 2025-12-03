@@ -1,37 +1,33 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useUser } from "@/hooks/useUser";
+import { useUser } from '@/hooks/useUser';
+import { useUI } from '@/hooks/useUI';
+
 import Searchbar from '@components/Searchbar';
-import profileFallbackImg from "/images/default-profile.png";
+
+import profileFallbackImg from '/images/default-profile.png';
+
 import './styles/Navbar.css';
 
 
-/* ===== Interface ===== */
-interface NavbarProps {
-	sidebarOpen: boolean;
-	activePage: string;
-	onMenuClick?: () => void;
-	onNotificationsClick?: () => void;
-	onSettingsClick?: () => void;
-	onProfileClick?: () => void;
-}
 
-
-/* ===== Main Function ===== */
-export default function Navbar({
-	sidebarOpen,
-	activePage,
-	onMenuClick,
-	onNotificationsClick,
-	onSettingsClick,
-	onProfileClick,
-}: NavbarProps) {
-
+/* ===================== MAIN FUNCTION ===================== */
+export default function Navbar() {
 	const navigate = useNavigate();
+
 	const { user } = useUser();
 
+	const {
+		activePage,
+		sidebarOpen,
+		toggleSidebar,
+		toggleProfilePanel,
+		toggleNotificationPanel,
+		toggleSettingsPanel,
+	} = useUI();
 
-	/* === Searchbar toggles for small screens === */
+
+	/* ___ Searchbar Toggles for Small Screens ___ */
 	const [searchActive, setSearchActive] = useState(false);
 	const [focusInput, setFocusInput] = useState<null | (() => void)>(null);
 
@@ -40,62 +36,62 @@ export default function Navbar({
 		setTimeout(() => focusInput?.(), 0);
 	};
 
-  const disableSearchbar  = () => setSearchActive(false);
+	const disableSearchbar = () => setSearchActive(false);
 
 
-	/* === Small Screen Check === */
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 640);
+	/* ___ Small Screen Check ___ */
+	const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 640);
 
 	useEffect(() => {
-    const handleResize = () => setIsSmallScreen(window.innerWidth <= 640);
-    window.addEventListener('resize', handleResize); // listen for resize
-    return () => window.removeEventListener('resize', handleResize); // cleanup on unmount
-  }, []);
+		const handleResize = () => setIsSmallScreen(window.innerWidth <= 640);
+		window.addEventListener('resize', handleResize); // listen for resize
+		return () => window.removeEventListener('resize', handleResize); // cleanup on unmount
+	}, []);
 
 
-	/* === UI === */
+	/* ====== UI ====== */
 	return (
 		<div className="navbar">
-			{/*** Left Container ***/}
-			{(!isSmallScreen || !searchActive) &&
+			
+			{/*** LEFT CONTAINER ***/}
+			{(!isSmallScreen || !searchActive) && (
 				<div className="left">
 					<span
 						className={`menu-btn  ${sidebarOpen ? 'active' : ''}`}
-						onClick={onMenuClick}
+						onClick={toggleSidebar}
 					>
 						<span /> <span /> <span />
 					</span>
 					<h1 className="title">{activePage}</h1>
 				</div>
-			}
+			)}
 
-			{/*** Search Bar Container ***/}
-			{(!isSmallScreen || searchActive) &&
+			{/*** SEARCH BAR CONTAINER ***/}
+			{(!isSmallScreen || searchActive) && (
 				<div className="middle">
 					<Searchbar
-						onReady={setFocusInput}
+						focus={setFocusInput}
 						onBlurEmpty={disableSearchbar}
 					/>
 				</div>
-			}
+			)}
 
-			{/*** Right Container ***/}
-			{(!isSmallScreen || !searchActive) &&
+			{/*** RIGHT CONTAINER ***/}
+			{(!isSmallScreen || !searchActive) && (
 				<div className="right">
 					<Link to="/e-library" className="link" target="_blank" rel="noopener noreferrer">E-Library</Link>
+					
 					{isSmallScreen && <span className="material-icons nav-icon nav-search-btn" onClick={enableSearchbar}>search</span>}
 					
-					{ user &&
-						<span className="material-icons nav-icon" onClick={onNotificationsClick}>notifications</span>
-					}
+					{user && <span className="material-icons nav-icon" onClick={toggleNotificationPanel}>notifications</span>}
 
-					<span className="material-icons nav-icon" onClick={onSettingsClick}>settings</span>
+					<span className="material-icons nav-icon" onClick={toggleSettingsPanel}>settings</span>
 
-					{ user 
+					{user 
 						? <img
 								className="profile-img"
 								src={user.profile}
-								onClick={onProfileClick}
+								onClick={toggleProfilePanel}
 								onError={(e) => {
 									e.currentTarget.onerror = null;
 									e.currentTarget.src = profileFallbackImg;
@@ -104,7 +100,8 @@ export default function Navbar({
 						: <span className="material-icons profile-icon" onClick={() =>navigate("/login", { state: { from: location.pathname } })}>person</span>
 					}
 				</div>
-			}
+			)}
+
 		</div>
 	);
 }

@@ -2,38 +2,37 @@
 
 
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*** Themes ***/
+ /* ---------------------------------------------------------------------------------------------------- */
+/** ====== THEMES ====== **/
 
-  /* Default Light theme */
-  :root {
-    color-scheme: light dark;
+	/*** LIGHT THEME (Default) ***/
+	:root {
+		color-scheme: light dark;
 
-    /* common colors */
-    --accent-color: rgb(0, 130, 255);
+		/* Common Colors */
+		--accent-color: rgb(0, 130, 255);
 
-    --link-hover-color: rgb(0,200,255);
-    --btn-hover-color: rgb(0, 100, 200);
-    --btn-hover-gradient: linear-gradient(90deg, var(--btn-hover-color), var(--link-hover-color));
+		--link-hover-color: rgb(0,200,255);
+		--btn-hover-color: rgb(0, 100, 200);
+		--btn-hover-gradient: linear-gradient(90deg, var(--btn-hover-color), var(--link-hover-color));
 
+		/* Background */
+		--bg-color: rgba(200, 200, 200, 0.7);
+		--bg-invert: 1;
 
-    /* background */
-    --bg-color: rgba(200, 200, 200, 0.7);
-    --bg-invert: 1;
-
-		/* scrollbar */
+		/* Scrollbar */
 		--scrollbar-thumb-color: rgba(130, 130, 130, 0.5);
 		--scrollbar-thumb-hover-color: rgba(130, 130, 130, 0.8);
 
-    /* text */
-    --text-invert-color: white;
-    --text-primary-color: black;
-    --text-secondary-color: rgb(70, 70, 70);
-    --text-tertiary-color: rgb(100, 100, 100);
+		/* Text */
+		--text-invert-color: white;
+		--text-primary-color: black;
+		--text-secondary-color: rgb(70, 70, 70);
+		--text-tertiary-color: rgb(100, 100, 100);
 
-    /* navbar */
-    --navbar-color: rgb(255, 255, 255);
-    --navbar-hover-color: rgb(150, 150, 150);
+		/* Navbar */
+		--navbar-color: rgb(255, 255, 255);
+		--navbar-hover-color: rgb(150, 150, 150);
 
 		/* Sidebar */
 		--sidebar-close-color: rgba(255, 255, 255, 0.5);
@@ -43,42 +42,41 @@
 		--sidebar-hover-color: rgb(120, 200, 255);
 		--sidebar-accent-color: rgb(100, 100, 100);
 
-    /* toggle switch */
-    --toggle-switch-bg-color: rgb(180, 180, 180);
+		/* Toggle Switch */
+		--toggle-switch-bg-color: rgb(180, 180, 180);
 
-    /* Panel general */
-    --panel-color: rgb(240, 240, 240);
-    --panel-transparent-color: rgb(255, 255, 255, 0.8);
-    --panel-border-color: rgb(240, 240, 240);
+		/* Panel General */
+		--panel-color: rgb(240, 240, 240);
+		--panel-transparent-color: rgb(255, 255, 255, 0.8);
+		--panel-border-color: rgb(240, 240, 240);
 
-		/* Profile panel */
+		/* Profile Panel */
 		--profile-img-border-color: rgb(255, 255, 255);
 		--profile-accent-color: rgb(0, 100, 200);
 		--profile-button-color: var(--accent-color);
+	}
 
-  }
+	/*** DARK THEME ***/
+	[data-theme="dark"] {
+		/* Background */
+		--bg-color: rgba(50, 50, 50, 0.5);
+		--bg-invert: 0;
 
-  /* Dark theme */
-  [data-theme="dark"] {
-    /* background */
-    --bg-color: rgba(50, 50, 50, 0.5);
-    --bg-invert: 0;
-
-		/* scrollbar */
+		/* Scrollbar */
 		--scrollbar-thumb-color: rgba(130, 130, 130, 0.5);
 		--scrollbar-thumb-hover-color: rgba(130, 130, 130, 0.8);
 
-    /* text */
-    --text-invert-color: black;
-    --text-primary-color: white;
-    --text-secondary-color: rgb(220, 220, 220);
-    --text-tertiary-color: rgb(200, 200, 200);
+		/* Text */
+		--text-invert-color: black;
+		--text-primary-color: white;
+		--text-secondary-color: rgb(220, 220, 220);
+		--text-tertiary-color: rgb(200, 200, 200);
 
-    /* navbar */
-    --navbar-color: rgb(0, 0, 10);
-    --navbar-hover-color: rgb(180, 180, 180);
+		/* Navbar */
+		--navbar-color: rgb(0, 0, 10);
+		--navbar-hover-color: rgb(180, 180, 180);
 
-		/* sidebar */
+		/* Sidebar */
 		--sidebar-close-color: rgba(0, 0, 50, 0.5);
 		--sidebar-open-color: rgba(0, 0, 50, 0.8);
 		--sidebar-active-color: rgb(85, 85, 85); /* #555 */
@@ -86,26 +84,26 @@
 		--sidebar-hover-color: rgb(68, 68, 68); /* #444 */
 		--sidebar-accent-color: rgb(255, 255, 255);
 
-    /* toggle switch */
-    --toggle-switch-bg-color: rgb(200, 200, 200);
+		/* Toggle Switch */
+		--toggle-switch-bg-color: rgb(200, 200, 200);
 
-    /* Panel general */
-    --panel-color: rgb(70, 70, 70);
-    --panel-transparent-color: rgb(150, 150, 150, 0.5);
-    --panel-border-color: rgb(120, 120, 120);
+		/* Panel General */
+		--panel-color: rgb(70, 70, 70);
+		--panel-transparent-color: rgb(150, 150, 150, 0.5);
+		--panel-border-color: rgb(120, 120, 120);
 
-		/* Profile panel */
+		/* Profile Panel */
 		--profile-img-border-color: rgb(50, 50, 50);
 		--profile-accent-color: rgb(0,200,255);
 		--profile-button-color: rgb(50, 50, 50);
-  }
+	}
 
 
 
  /* ---------------------------------------------------------------------------------------------------- */
-/*** General Animations ***/
+/** ====== ANIMATIONS ====== **/
 
-	/* === keyframes === */
+	/*** Keyframes ***/
 
 		/* Fade */
 		@keyframes fade-in {
@@ -169,7 +167,7 @@
 		}
 
 
-	/* === Animations === */
+	/*** Animations ***/
 		
 		/* Fade */
 		.fade-in {
@@ -222,37 +220,61 @@
 
 
 
+ /* ---------------------------------------------------------------------------------------------------- */
+/** ====== SCROLLBAR ====== **/
+::-webkit-scrollbar {
+	width: 8px;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--scrollbar-thumb-color);
+	border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--scrollbar-thumb-hover-color);
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-button {
+	display: none;
+}
+
+
+
+ /* ---------------------------------------------------------------------------------------------------- */
+/** ====== STYLING ====== **/
+
 #root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  min-height: 100svh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	min-height: 100svh;
+	width: 100vw;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+	margin: 0;
+	display: flex;
+	place-items: center;
+	min-width: 320px;
+	min-height: 100vh;
 
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+	font-family: 'Poppins', sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
 
-  color: var(--text-primary-color);
-  background-color: var(--text-invert-color);
+	color: var(--text-primary-color);
+	background-color: var(--text-invert-color);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
-  overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 .page-container {
@@ -327,6 +349,27 @@ body {
 	}
 }
 
+.footer-links {
+	font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+	font-size: 14px;
+	display: flex;
+	bottom: 10px;
+	left: 20px;
+	right: 20px;
+	gap: 8px;
+
+	.head,
+	a:not(:hover) {
+		color: white;
+	}
+
+	.separator {
+		color: rgba(150, 150, 150, 0.6);
+		pointer-events: none;
+	}
+}
+
 .bg-blur {
 	position: fixed;
 	width: 100%;
@@ -365,8 +408,8 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-  font-size: 18px;
-  opacity: 0.8;  
+	font-size: 18px;
+	opacity: 0.8;  
 }
 
 ._empty {
@@ -382,50 +425,15 @@ body {
 	animation: dot-cycle 1.2s infinite steps(1);
 }
 
-
-/* Scrollbar  */
-::-webkit-scrollbar {
-	width: 8px;
-}
-::-webkit-scrollbar-thumb {
-	background: var(--scrollbar-thumb-color);
-	border-radius: 8px;
-}
-::-webkit-scrollbar-thumb:hover {
-	background: var(--scrollbar-thumb-hover-color);
-}
-::-webkit-scrollbar-track {
-	background: transparent;
-}
-::-webkit-scrollbar-button {
-	display: none;
-}
-
-.footer-links {
-	font-family: Arial, Helvetica, sans-serif;
-	position: absolute;
-	font-size: 14px;
-	display: flex;
-	bottom: 10px;
-	left: 20px;
-	right: 20px;
-	gap: 8px;
-
-	.head,
-	a:not(:hover) {
-		color: white;
-	}
-
-	.separator {
-		color: rgba(150, 150, 150, 0.6);
-		pointer-events: none;
-	}
+h1 {
+	font-size: 3.2em;
+	line-height: 1.1;
 }
 
 a {
-  font-weight: normal;
-  color: var(--accent-color);
-  text-decoration: inherit;
+	font-weight: normal;
+	color: var(--accent-color);
+	text-decoration: inherit;
 	cursor: pointer;
 
 	&:hover {
@@ -434,29 +442,23 @@ a {
 	}
 }
 
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 button {
-  cursor: pointer;
-  border-radius: 5px;
-  padding: 8px 15px;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  border: 1px solid transparent;
-  background-color: var(--accent-color);
+	cursor: pointer;
+	border-radius: 5px;
+	padding: 8px 15px;
+	font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+	border: 1px solid transparent;
+	background-color: var(--accent-color);
 	color: white;
-}
-button:hover {
-  background-color: var(--btn-hover-color);
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
+	&:hover {
+		background-color: var(--btn-hover-color);
+	}
 
+	&:focus,
+	&:focus-visible {
+		outline: 4px auto -webkit-focus-ring-color;
+	}
+}

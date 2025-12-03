@@ -1,54 +1,61 @@
-import { useNavigate  } from 'react-router-dom';
 import { useRef, useState, useEffect, type FormEvent } from 'react';
+import { useNavigate  } from 'react-router-dom';
+
 import './styles/Searchbar.css';
 
 
-/* ===== Interface ===== */
+
+/* ===================== PROPS ===================== */
 interface SearchbarProps {
-	onReady?: (fn: () => void) => void;
-  onBlurEmpty?: () => void;
+	focus?: (fn: () => void) => void;
+	onBlurEmpty?: () => void;
+	forceTheme?: 'light' | 'dark';
 }
 
 
-/* ===== Main Function ===== */
-export default function Searchbar({ onReady, onBlurEmpty }: SearchbarProps) {
+
+/* ===================== MAIN FUNCTION ===================== */
+export default function Searchbar({ focus, onBlurEmpty, forceTheme }: SearchbarProps) {
 	const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [searchValue, setSearchValue] = useState('');
+	const [searchValue, setSearchValue] = useState('');
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	
-	/* === Helper Functions === */
-	// Handle Search
-  const handleSearch = (e: FormEvent) => {
-		e.preventDefault(); // Prevent page refresh
+	/* ___ Handle Search ___ */
+	const handleSearch = (e: FormEvent) => {
+		e.preventDefault(); // prevent page refresh
 
 		if (searchValue.trim() !== '') {
 			navigate('/' + searchValue.trim());
 		}
-  };
+	};
+
 	
-	// clear search value
-  const clearSearch = () => {
-    setSearchValue('');
-    inputRef.current?.focus();
-  };	
+	/* ___ Clear Search Value ___ */
+	const clearSearch = () => {
+		setSearchValue('');
+		inputRef.current?.focus();
+	};	
 
-	// notify parent on input blur
+
+	/* ___ Notify Parent On Input Blur ___ */
 	const handleBlur = () => {
-    if (searchValue.trim() === '') {
-      onBlurEmpty?.();
-    }
-  };
-
-  // Give parent access to focus()
-  useEffect(() => {
-    onReady?.(() => inputRef.current?.focus());
-  }, []);
+		if (searchValue.trim() === '') {
+			onBlurEmpty?.();
+		}
+	};
 
 
-	/* === UI === */
+	/* ___ Give Parent Access to Focus + Blur ___ */
+	useEffect(() => {
+		focus?.(() => inputRef.current?.focus());
+		inputRef.current?.blur();
+	}, []);
+
+
+	/* ====== UI ====== */
 	return (
-		<form className="searchbar" onSubmit={handleSearch}>
+		<form className={`searchbar ${forceTheme ? forceTheme : ''}`} onSubmit={handleSearch}>
 			<input
 				ref={inputRef}
 				type="text"

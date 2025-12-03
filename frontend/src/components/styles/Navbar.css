@@ -74,12 +74,12 @@
 	.profile-icon {
 		display: flex;
 		width: 35px;
-    height: 35px;
+		height: 35px;
 		font-size: 20px;
 		cursor: pointer;
 		border-radius: 50%;
-  	align-items: center;
-  	justify-content: center;
+		align-items: center;
+		justify-content: center;
 		color: var(--text-invert-color);
 		background-color: var(--text-primary-color);
 
@@ -89,12 +89,12 @@
 	}
 
 	.profile-img {
-    width: 35px;
-    height: 35px;
-    padding: 2px;
-    cursor: pointer;
-    object-fit: cover;
-    border-radius: 50%;
+		width: 35px;
+		height: 35px;
+		padding: 2px;
+		cursor: pointer;
+		object-fit: cover;
+		border-radius: 50%;
 		background-color: var(--text-primary-color);
 		transition: padding ease 0.1s;
 
