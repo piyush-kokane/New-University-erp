@@ -110,10 +110,6 @@ A modern, fast, and scalable **University ERP System** built using **Vite + Reac
 
 ## 📌 Status
 
-This project is **actively in development** as part of a full University ERP system. More modules such as Attendance, Courses, Documents, Fee Management, Timetable, Results, and Admin Panel will be added.
+This project is **actively in development** as part of an academic & personal learning initiative  and is a working demonstration of University ERP system. More modules such as Attendance, Courses, Documents, Fee Management, Timetable, Results, and Admin Panel will be added.
 
----
 
-## 📄 License
-
-This project is private and part of an academic & personal learning initiative.
