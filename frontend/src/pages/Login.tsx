@@ -83,7 +83,7 @@ export default function LoginPage() {
       <div className="page">
         
         {/*** LOGO ***/}
-        <img src="/images/mit-logo-banner1.png" alt="MIT WPU" className="logo" />
+        <img src="/images/mit-logo-banner.png" alt="MIT WPU" className="logo" />
 
         {/*** FOOTER LINKS ***/}
         <div className="footer-links">
