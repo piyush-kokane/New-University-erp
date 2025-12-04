@@ -12,79 +12,79 @@ import './styles/Settings.css';
 
 /* ===================== MAIN FUNCTION ===================== */
 export default function SettingsPanel() {
-	const { user } = useUser();
+  const { user } = useUser();
 
-	const { toggleSettingsPanel } = useUI();
+  const { toggleSettingsPanel } = useUI();
 
-	const [closing, setClosing] = useState(false);
-	const [notifications, setNotifications] = useState(false);
-	const [email, setEmail] = useState(false);
-
-
-	/* ___ Handle Closing ___ */
-	const handleClose = () => {
-		setClosing(true); // start animation
-		setTimeout(() => toggleSettingsPanel(), 200); // delay must match animation duration (0.2s) // call close function after animation
-	};
+  const [closing, setClosing] = useState(false);
+  const [notifications, setNotifications] = useState(false);
+  const [email, setEmail] = useState(false);
 
 
-	/* ___ Notification Toggle ___ */
-	const handleNotificationsToggle = (value: boolean) => {
-		setNotifications(value);
-		toast.success(`Notifications ${value ? 'enabled' : 'disabled'}`);
-	};
+  /* ___ Handle Closing ___ */
+  const handleClose = () => {
+    setClosing(true); // start animation
+    setTimeout(() => toggleSettingsPanel(), 200); // delay must match animation duration (0.2s) // call close function after animation
+  };
 
 
-	/* ___ Email Toggle ___ */
-	const handleEmailToggle = (value: boolean) => {
-		setEmail(value);
-		toast.success(`Email ${value ? 'enabled' : 'disabled'}`);
-	};
+  /* ___ Notification Toggle ___ */
+  const handleNotificationsToggle = (value: boolean) => {
+    setNotifications(value);
+    toast.success(`Notifications ${value ? 'enabled' : 'disabled'}`);
+  };
 
 
-	/* ====== UI ====== */
-	return (
-		<div className={`bg-blur ${closing ? 'fade-out' : 'fade-in'}`} onClick={handleClose}>
-			<div
-				className={`settings-panel ${closing ? 'slide-out' : 'slide-in'}`}
-				onClick={e => e.stopPropagation()}
-			>
+  /* ___ Email Toggle ___ */
+  const handleEmailToggle = (value: boolean) => {
+    setEmail(value);
+    toast.success(`Email ${value ? 'enabled' : 'disabled'}`);
+  };
 
-				{/*** CLOSE BUTTON ***/}
-				<span className="material-icons cancel-btn" onClick={handleClose}>
-					close
-				</span>
-				<h1>Settings</h1>
 
-				{/*** THEME TOGGLE ***/}
-				<div className="toggle-container">
-					<h2>Theme</h2>
-					<ToggleTheme />
-				</div>
+  /* ====== UI ====== */
+  return (
+    <div className={`bg-blur ${closing ? 'fade-out' : 'fade-in'}`} onClick={handleClose}>
+      <div
+        className={`settings-panel ${closing ? 'slide-out' : 'slide-in'}`}
+        onClick={e => e.stopPropagation()}
+      >
 
-				{/*** NOTIFICATIONS TOGGLE ***/}
-				{user && (
-					<>
-						<div className="separator" />
-						<div className="toggle-container">
-							<h2>Notifications</h2>
-							<ToggleSwitch enabled={notifications} onToggle={handleNotificationsToggle} />
-						</div>
-					</>
-				)}
+        {/*** CLOSE BUTTON ***/}
+        <span className="material-icons cancel-btn" onClick={handleClose}>
+          close
+        </span>
+        <h1>Settings</h1>
 
-				{/*** EMAIL TOGGLE ***/}
-				{user && (
-					<>
-						<div className="separator" />
-						<div className="toggle-container">
-							<h2>Email</h2>
-							<ToggleSwitch enabled={email} onToggle={handleEmailToggle} />
-						</div>
-					</>
-				)}
+        {/*** THEME TOGGLE ***/}
+        <div className="toggle-container">
+          <h2>Theme</h2>
+          <ToggleTheme />
+        </div>
 
-			</div>
-		</div>
-	);
+        {/*** NOTIFICATIONS TOGGLE ***/}
+        {user && (
+          <>
+            <div className="separator" />
+            <div className="toggle-container">
+              <h2>Notifications</h2>
+              <ToggleSwitch enabled={notifications} onToggle={handleNotificationsToggle} />
+            </div>
+          </>
+        )}
+
+        {/*** EMAIL TOGGLE ***/}
+        {user && (
+          <>
+            <div className="separator" />
+            <div className="toggle-container">
+              <h2>Email</h2>
+              <ToggleSwitch enabled={email} onToggle={handleEmailToggle} />
+            </div>
+          </>
+        )}
+
+      </div>
+    </div>
+  );
 }

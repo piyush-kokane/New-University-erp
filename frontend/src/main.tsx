@@ -12,13 +12,13 @@ import './index.css';
 createRoot(document.getElementById('root')!).render(
   //<StrictMode>
     <BrowserRouter>
-			<ThemeProvider>
-      	<UserProvider>
-					<UIProvider>
-          	<App />
-					</UIProvider>
-      	</UserProvider>  
-			</ThemeProvider>
+      <ThemeProvider>
+        <UserProvider>
+          <UIProvider>
+            <App />
+          </UIProvider>
+        </UserProvider>  
+      </ThemeProvider>
     </BrowserRouter>
   //</StrictMode>
 )
