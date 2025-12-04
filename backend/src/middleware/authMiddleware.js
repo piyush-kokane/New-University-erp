@@ -5,11 +5,11 @@ import jwt from 'jsonwebtoken';
 
 /* ===================== Verify sessionId + JWT ===================== */
 export async function authMiddleware(req, res, next) {
-	const token = req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization?.split(' ')[1];
 
-	if (!token) return res.status(400).json({ message: 'Token not provided' });
+  if (!token) return res.status(400).json({ message: 'Token not provided' });
 
-	try {
+  try {
     // Decode JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -26,8 +26,8 @@ export async function authMiddleware(req, res, next) {
 
     // Continue
     next();
-	}
-	catch (error) {
-		res.status(401).json({ message: 'Token expired or invalid' });
-	}
+  }
+  catch (error) {
+    res.status(401).json({ message: 'Token expired or invalid' });
+  }
 }

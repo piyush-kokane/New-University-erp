@@ -1,5 +1,4 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import Policy from '@/components/policy_&_conditions/Privacy_Policy';
 import Terms from '@/components/policy_&_conditions/Terms_&_Conditions';
@@ -15,23 +14,6 @@ export default function PolicyPage() {
 
 	const onPolicy = location.pathname == '/privacy-policy'; // check if user is on privacy-policy page if yes set onPolicy to true
 	const onTerms = location.pathname == '/terms-&-conditions'; // check if user is on terms-&-conditions page if yes set onTerms to true
-
-
-	/* ___ Dynamically Change Title ___ */
-	useEffect(() => {
-		// Change document title
-		if (onPolicy) document.title = 'Privacy Policy';
-		if (onTerms) document.title = 'Terms & Conditions';
-
-		// Scroll to top 
-		const page = document.querySelector('.page-container') as HTMLElement | null;
-		if (page) {
-			page.scrollTo({
-				top: 0,
-				behavior: 'smooth',
-			});
-		}
-	}, [location.pathname]);
 
 
 	/* ====== UI ====== */

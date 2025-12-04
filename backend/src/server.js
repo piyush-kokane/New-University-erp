@@ -38,10 +38,10 @@ app.listen(PORT, () => console.log(`🟢 Server running on port ${PORT}`));
 const password = '123';
 const saltRounds = 10;
 bcrypt.hash(password, saltRounds, (err, hashed) => {
-	if (err) console.error('Error hashing password:', err);
-	else {
-		console.log(`Plain Password: ${password}`);
-		console.log(`Hashed Password: ${hashed}`);
-	}
+  if (err) console.error('Error hashing password:', err);
+  else {
+    console.log(`Plain Password: ${password}`);
+    console.log(`Hashed Password: ${hashed}`);
+  }
 });
 */

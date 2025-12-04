@@ -23,12 +23,21 @@ using Vite proxy for automated backend call
 
 
 Break Points
-	1024px - column-count: 2 → 1
-	768px - Sidebar collapse
-	640px - Searchbar coollapse
+  1024px - column-count: 2 → 1
+  768px - Sidebar collapse
+  640px - Searchbar coollapse
+
+
+Added Landing page
 
 
 Added 404 Page-Not-Found page
+
+
+Dynamically changes page title
+
+
+Scrolls to top smoothly
 
 
 Auto logout after 1hr of inactivity 
@@ -48,10 +57,10 @@ new login overites previous data
 
 logout has status
 console.log & toast accordingly
-	no status - Logged out successfully
-	401 - Token expired or invalid
-	440 - Logging out due to inactivaty
-	else - Logged out successfully
+  no status - Logged out successfully
+  401 - Token expired or invalid
+  440 - Logging out due to inactivaty
+  else - Logged out successfully
 
 
 While loging out stores url of pages

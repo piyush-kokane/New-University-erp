@@ -60,17 +60,17 @@ const ParentInfoSchema = new mongoose.Schema({
 
 
 const NotificationSchema = new mongoose.Schema({
-	title:   { type: String, required: true },
-	message: { type: String, required: true },
-	date:    { type: String, required: true },
-	time:    { type: String, required: true },
+  title:   { type: String, required: true },
+  message: { type: String, required: true },
+  date:    { type: String, required: true },
+  time:    { type: String, required: true },
 }, { _id: false });
 
 
 const UserSchema = new mongoose.Schema({
   username:      { type: String,               required: true, unique: true },
- 	password:      { type: String,               required: true },
-	sessionId:     { type: String,               default: null },
+  password:      { type: String,               required: true },
+  sessionId:     { type: String,               default: null },
   userData:      { type: UserDataSchema,       required: true },
   about:         { type: [KeyValue],           default: [], _id: false },
   moreInfo:      { type: [KeyValue],           default: [], _id: false },

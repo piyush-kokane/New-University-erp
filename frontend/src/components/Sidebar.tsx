@@ -27,7 +27,7 @@ interface SidebarProps {
 export default function Sidebar({ menuItems }: SidebarProps) {
 	const navigate = useNavigate();
 
-	const { logout } = useUser();
+	const { user, logout } = useUser();
 
 	const {
 		activePage,
@@ -68,10 +68,12 @@ export default function Sidebar({ menuItems }: SidebarProps) {
 			</nav>
 
 			{/* Logout Button */}
-			<button className="item logout-btn" onClick={handleLogout}>
-				<span className="material-icons icon">logout</span>
-				<span className={`text ${sidebarOpen ? 'visible' : ''}`}>Logout</span>
-			</button>
+			{user && (
+				<button className="item logout-btn" onClick={handleLogout}>
+					<span className="material-icons icon">logout</span>
+					<span className={`text ${sidebarOpen ? 'visible' : ''}`}>Logout</span>
+				</button>
+			)}
 
 		</div>
 	);

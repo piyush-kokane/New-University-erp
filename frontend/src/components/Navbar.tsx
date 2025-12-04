@@ -97,7 +97,7 @@ export default function Navbar() {
 									e.currentTarget.src = profileFallbackImg;
 								}}
 							/>
-						: <span className="material-icons profile-icon" onClick={() =>navigate("/login", { state: { from: location.pathname } })}>person</span>
+						: <span className="material-icons profile-icon" title="Login" onClick={() =>navigate("/login", { state: { from: location.pathname } })}>person</span>
 					}
 				</div>
 			)}

@@ -1,29 +1,29 @@
 .bg {
-	top: 0;
-	left: 0;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	z-index: -10;
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -10;
 }
 
 .bg-image {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	transition: filter 0.4s ease;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.4s ease;
 }
 
 .bg-image.invertable {
-	filter: invert(var(--bg-invert)); /* invert colors for light theme */
+  filter: invert(var(--bg-invert)); /* invert colors for light theme */
 }
 
 .bg-overlay {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	background: var(--bg-color);
-	transition: background 0.4s ease;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color);
+  transition: background 0.4s ease;
 }

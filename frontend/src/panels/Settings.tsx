@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useUser } from '@/hooks/useUser';
 import { useUI } from '@/hooks/useUI';
 
 import ToggleSwitch from '@/components/ToggleSwitch';
@@ -11,6 +12,8 @@ import './styles/Settings.css';
 
 /* ===================== MAIN FUNCTION ===================== */
 export default function SettingsPanel() {
+	const { user } = useUser();
+
 	const { toggleSettingsPanel } = useUI();
 
 	const [closing, setClosing] = useState(false);
@@ -59,23 +62,27 @@ export default function SettingsPanel() {
 					<ToggleTheme />
 				</div>
 
-				{/* Separator */}
-				<div className="separator" />
-
 				{/*** NOTIFICATIONS TOGGLE ***/}
-				<div className="toggle-container">
-					<h2>Notifications</h2>
-					<ToggleSwitch enabled={notifications} onToggle={handleNotificationsToggle} />
-				</div>
-
-				{/* Separator */}
-				<div className="separator" />
+				{user && (
+					<>
+						<div className="separator" />
+						<div className="toggle-container">
+							<h2>Notifications</h2>
+							<ToggleSwitch enabled={notifications} onToggle={handleNotificationsToggle} />
+						</div>
+					</>
+				)}
 
 				{/*** EMAIL TOGGLE ***/}
-				<div className="toggle-container">
-					<h2>Email</h2>
-					<ToggleSwitch enabled={email} onToggle={handleEmailToggle} />
-				</div>
+				{user && (
+					<>
+						<div className="separator" />
+						<div className="toggle-container">
+							<h2>Email</h2>
+							<ToggleSwitch enabled={email} onToggle={handleEmailToggle} />
+						</div>
+					</>
+				)}
 
 			</div>
 		</div>
