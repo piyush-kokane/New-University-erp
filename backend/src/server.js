@@ -16,7 +16,6 @@ await connectDB(); // connect MongoDB
 
 const app = express(); // create app
 
-
 // Middlewares
 app.use(cors());
 app.use(express.json());
