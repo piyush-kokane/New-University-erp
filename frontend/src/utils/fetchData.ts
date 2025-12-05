@@ -4,7 +4,7 @@ export async function fetchData<T>(
 ): Promise<T | null> {
 
   try {
-    // await new Promise(resolve => setTimeout(resolve, 2000)); // simulate server delay
+    await new Promise(resolve => setTimeout(resolve, 2000)); // simulate server delay
 
     const token = localStorage.getItem('token'); // get token
 
@@ -13,10 +13,10 @@ export async function fetchData<T>(
     });
 
     if (!res.ok) {
-      const errorBody = await res.json();
+      const errorBody = await res.json().catch(() => ({}));
       throw {
         status: res.status,
-        message: errorBody?.message || 'Server error',
+        message: errorBody?.message || 'Server unreachable',
       };
     }
     

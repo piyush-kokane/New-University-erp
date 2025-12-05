@@ -82,19 +82,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       //await new Promise(resolve => setTimeout(resolve, 2000)); // 2s
 
       // Validate user credentials
-      const response = await fetch('/api/auth/login', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
 
-      const data: ApiResponse = await response.json();
+      const data: ApiResponse = await res.json().catch(() => ({}));
 
       // If error
-      if (!response.ok) {
+      if (!res.ok) {
         throw {
-          status: response.status,
-          message: data?.message || 'Invalid credentials',
+          status: res.status,
+          message: data?.message || 'Server unreachable',
         };
       }
 
@@ -133,11 +133,25 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   /* ___ Logout ___ */
   const logout = async (status?: number) => {
+    const localLogout = () => {
+      // Clear localStorage except 'theme'
+      const theme = localStorage.getItem('theme');
+      localStorage.clear();
+      if (theme) localStorage.setItem('theme', theme);
+
+      // Remove user
+      setUser(null);
+
+      // Navigate to login page
+      navigate('/login', { state: { from: location.pathname }, replace: true });
+    };
+
     setLoggingOut(true);
 
     try {
       const token = localStorage.getItem('token');
 
+      // Call logout api
       const res = await fetch('/api/auth/logout', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
@@ -160,20 +174,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         console.log('🔴 Logged out');
       }
 
-      // Clear localStorage except 'theme'
-      const theme = localStorage.getItem('theme');
-      localStorage.clear();
-      if (theme) localStorage.setItem('theme', theme);
-
-      // Remove user
-      setUser(null);
-
-      // Navigate to login page
-      navigate('/login', { state: { from: location.pathname }, replace: true });
+      // Logout locally
+      localLogout();
     }
     catch (error: any) {
-      toast.error('Error logging out. Please try again');
-      console.error('🔺 Error logging out');
+      toast.error('Error logging out. Logging out locally');
+      console.warn('🔺 Error logging out. Logging out locally');
+      localLogout();
     }
     finally {
       // setLoggingOut(false);

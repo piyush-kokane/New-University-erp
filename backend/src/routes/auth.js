@@ -78,9 +78,13 @@ router.post('/login', async (req, res) => {
 
 
 /* ===================== LOGOUT ===================== */
-router.post('/logout', authMiddleware, async (req, res) => {
+router.post('/logout', async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    const decoded = jwt.decode(token);
+
+    const user = await User.findById(decoded.id);
 
     // Invalidate all tokens by generating new session ID
     user.sessionId = crypto.randomUUID();

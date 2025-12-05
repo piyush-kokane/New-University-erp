@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
 
 
@@ -9,11 +9,13 @@ interface UIContextType {
   profilePanel: boolean;
   notificationPanel: boolean;
   settingsPanel: boolean;
+  servicePanel: boolean;
 
   toggleSidebar: () => void;
   toggleProfilePanel: () => void;
   toggleNotificationPanel: () => void;
   toggleSettingsPanel: () => void;
+  toggleServicePanel: () => void;
 
   setSidebarOpen: (value: boolean) => void;
   setActivePage: (page: string) => void;
@@ -33,11 +35,13 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   const [profilePanel, setProfilePanel] = useState(false);
   const [notificationPanel, setNotificationPanel] = useState(false);
   const [settingsPanel, setSettingsPanel] = useState(false);
+  const [servicePanel, setServicePanel] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(prev => !prev);
   const toggleProfilePanel = () => setProfilePanel(prev => !prev);
   const toggleNotificationPanel = () => setNotificationPanel(prev => !prev);
   const toggleSettingsPanel = () => setSettingsPanel(prev => !prev);
+  const toggleServicePanel = () => setServicePanel(prev => !prev);
 
 
   /* ====== Return ====== */
@@ -49,10 +53,12 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         profilePanel,
         notificationPanel,
         settingsPanel,
+        servicePanel,
         toggleSidebar,
         toggleProfilePanel,
         toggleNotificationPanel,
         toggleSettingsPanel,
+        toggleServicePanel,
         setSidebarOpen,
         setActivePage,
       }}

@@ -33,12 +33,12 @@ export default function LoginPage() {
   /* ___ Set Error Fields + Input Focus + Toast ___ */
   const setErrorFields = (
     msg: string,
-    ref: RefObject<HTMLInputElement | null>,
-    setter: (v: boolean) => void
+    ref?: RefObject<HTMLInputElement | null>,
+    setter?: (v: boolean) => void
   ) => {
+    if (ref?.current) ref.current.focus();
+    if (setter) setter(true);
     setErrorMsg(msg);
-    ref.current?.focus();
-    setter(true);
     toast.error(msg);
   };
 
@@ -72,6 +72,9 @@ export default function LoginPage() {
       }
       if (loginError.status === 401) {
         setErrorFields(loginError.message, passwordRef, setPasswordError);
+      }
+      if (loginError.status === 500) {
+        setErrorFields(loginError.message);
       }
     }
   };

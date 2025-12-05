@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useUI } from '@/hooks/useUI';
 import './styles/Dashboard.css';
 
 
 
 /* ===================== MAIN FUNCTION ===================== */
 export default function Dashboard() {
+  const { toggleServicePanel } = useUI();
   const [loading, setLoading] = useState(false);
 
 
@@ -28,7 +30,7 @@ export default function Dashboard() {
           {/*** FOOTER ***/}
           <div className="page-footer">
             <p>© 2025 All Rights Reservedㅤ-ㅤWebsite Designed and Developed by MIT-WPU</p>
-            <a>Service Request<span className="material-icons">construction</span></a>
+            <a onClick={toggleServicePanel}>Service Request<span className="material-icons">construction</span></a>
           </div>
 
         </div>

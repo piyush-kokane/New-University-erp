@@ -13,6 +13,7 @@ import Dashboard from '@pages/student/Dashboard'
 
 import Navbar from '@components/Navbar';
 import Sidebar from '@components/Sidebar';
+import ServicePanel from '@panels/Service';
 import SettingsPanel from '@panels/Settings';
 import NotificationPanel from '@panels/Notifications';
 import ProfilePanel from '@panels/Profile';
@@ -89,6 +90,7 @@ function Isolated_Layout() {
     profilePanel,
     notificationPanel,
     settingsPanel,
+    servicePanel,
     setActivePage,
   } = useUI();
 
@@ -171,6 +173,7 @@ function Isolated_Layout() {
 
       {/*** PANELS ***/}
       {(showUI && profilePanel) && <ProfilePanel />}
+      {(showUI && servicePanel) && <ServicePanel />}
       {(showUI && settingsPanel) && <SettingsPanel />}
       {(showUI && notificationPanel) && <NotificationPanel />}
     </>
