@@ -1,0 +1,118 @@
+.service-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 800px;
+  padding: 30px;
+  border-radius: 8px;
+  border: 2px solid var(--panel-border-color);
+  background: var(--panel-transparent-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px); /* blur effect */
+  overflow: hidden;
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+  }
+
+  h2 {
+    font-size: 14px;
+    color: var(--text-secondary-color);
+  }
+
+  form {
+    width: 100%;
+  }
+
+  textarea {
+    font-size: 16px;
+    padding: 10px;
+    height: 300px;
+    width: 100%;
+    resize: none;
+    border-radius: 5px;
+    border: 1px solid var(--text-tertiary-color);
+  }
+
+  .file-upload {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--text-tertiary-color);
+
+    .uploaded-files {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-height: 200px;
+      color: var(--text-secondary-color);
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 7px 5px;
+      gap: 2px;
+
+      p {
+        width: 100%;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .file-item {
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+        padding: 0 2px;
+        width: 100%;
+        gap: 5px;
+
+        &:hover {
+          background-color: rgba(150, 150, 150, 0.2);
+        }
+
+        span {
+          padding: 1px;
+          font-size: 18px;
+          cursor: pointer;
+          border-radius: 50%;
+          color: var(--text-tertiary-color);
+          transition: all ease 0.2s;
+
+          &:hover {
+            color: red;
+            background-color: rgba(150, 150, 150, 0.2);
+          }
+        }      
+      }      
+    }
+
+    .file-upload-btn {
+      flex: 1;
+      padding: 0;
+      height: 40px;
+      max-width: 40px;
+      font-size: 26px;
+      line-height: 20px;
+      font-weight: normal;
+    }
+  }
+
+  .submit-btn {
+    font-size: 18px;
+    margin-top: 30px;
+    padding: 8px 30px;
+    border-radius: 50px;
+  }
+}

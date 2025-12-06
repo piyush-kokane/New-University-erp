@@ -31,7 +31,7 @@ export default function ProfilePanel() {
   /* ___ Handle Closing ___ */
   const handleClose = () => {
     setClosing(true); // start animation
-    setTimeout(() => toggleProfilePanel(), 200); // delay must match animation duration (0.2s) // call close function after animation
+    setTimeout(toggleProfilePanel, 200); // delay must match animation duration (0.2s) // call close function after animation
   };
 
 

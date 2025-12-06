@@ -24,7 +24,7 @@ export default function SettingsPanel() {
   /* ___ Handle Closing ___ */
   const handleClose = () => {
     setClosing(true); // start animation
-    setTimeout(() => toggleSettingsPanel(), 200); // delay must match animation duration (0.2s) // call close function after animation
+    setTimeout(toggleSettingsPanel, 200); // delay must match animation duration (0.2s) // call close function after animation
   };
 
 
@@ -54,6 +54,8 @@ export default function SettingsPanel() {
         <span className="material-icons cancel-btn" onClick={handleClose}>
           close
         </span>
+
+        {/*** HEADER ***/}
         <h1>Settings</h1>
 
         {/*** THEME TOGGLE ***/}

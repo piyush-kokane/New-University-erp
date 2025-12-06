@@ -229,12 +229,14 @@
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb-color);
   border-radius: 8px;
+  cursor: default;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover-color);
 }
 ::-webkit-scrollbar-track {
   background: transparent;
+  cursor: default;
 }
 ::-webkit-scrollbar-button {
   display: none;

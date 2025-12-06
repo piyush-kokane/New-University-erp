@@ -33,7 +33,7 @@ export default function NotificationPanel() {
   /* ___ Handle Closing ___ */
   const handleClose = () => {
     setClosing(true); // start animation
-    setTimeout(() => toggleNotificationPanel(), 200); // delay must match animation duration (0.2s) // call close function after animation
+    setTimeout(toggleNotificationPanel, 200); // delay must match animation duration (0.2s) // call close function after animation
   };
 
 
