@@ -122,13 +122,6 @@ function Isolated_Layout() {
 
   const showUI = onLanding || onProtected; // common condition for ui components
 
-
-  /* ___ Update Active Page ___ */
-  useEffect(() => {
-    const activePage = protectedRoutes.find(i => i.path === path);
-    setActivePage(activePage?.name || 'MIT-WPU');
-  }, [path]);
-
   
   /* ___ Route Change Side Effects ___ */
   useEffect(() => {

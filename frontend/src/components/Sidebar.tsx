@@ -47,8 +47,8 @@ export default function Sidebar({ menuItems }: SidebarProps) {
   return (
     <div
       className={`sidebar ${sidebarOpen ? 'open' : ''}`}
-      onMouseEnter={() => setSidebarOpen(true)}
-      onMouseLeave={() => setSidebarOpen(false)}
+      onMouseEnter={() => user && setSidebarOpen(true)}
+      onMouseLeave={() => user && setSidebarOpen(false)}
     >
 
       {/* Menu Button */}
