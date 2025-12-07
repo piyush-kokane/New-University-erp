@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { toast } from 'react-hot-toast';
+import { useServiceRequest } from '@/hooks/useServiceRequest';
 import { useUser } from '@/hooks/useUser';
 import { useUI } from '@/hooks/useUI';
 
@@ -18,10 +19,15 @@ export default function Service() {
   const name = user?.fullName;
   const gmail = user?.gmail;
 
-  const [issue, setIssue] = useState('');
-  const [files, setFiles] = useState<File[]>([]);
+  const {
+    issue,  
+    files,
+    setIssue,
+    setFiles,
+  } = useServiceRequest();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   /* ___ Handle Closing ___ */
   const handleClose = () => {
@@ -32,8 +38,24 @@ export default function Service() {
 
   /* ___ Handle Submit ___ */
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault(); // prevents refresh of tab
+    e.preventDefault();	// prevent page refresh
 
+    // Check if issue is empty
+    if (issue.trim() === '') {
+      toast.error('Write your issue first');
+      return;
+    }
+
+    // Toast
+    toast.success('Your issue sent successfully');
+
+    // Close
+    setClosing(true); // start animation
+    setTimeout(() => {
+      toggleServicePanel(); // close panel
+      setIssue('');        // clear issue
+      setFiles([]);       // clear files
+    }, 200);
   }
 
 
@@ -81,6 +103,7 @@ export default function Service() {
         <form onSubmit={handleSubmit}>
           {/* Textarea */}
           <textarea
+            value={issue}
             placeholder="Describe your issue..."
             onChange={(e) => setIssue(e.target.value)}
           />
@@ -99,7 +122,7 @@ export default function Service() {
             </div>
             
             {/* Upload input & button */}
-            <button className="file-upload-btn" onClick={() => fileInputRef.current?.click()}>+</button>
+            <button type="button" className="file-upload-btn" onClick={() => fileInputRef.current?.click()}>+</button>
             <input
               ref={fileInputRef}
               type="file"
