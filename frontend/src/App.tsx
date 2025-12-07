@@ -141,12 +141,10 @@ function Isolated_Layout() {
   /* ___ Scroll To Top ___ */
   useEffect(() => {
     const page = document.querySelector('.page-container') as HTMLElement | null;
-    if (page) {
-      page.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
+    page?.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }, [location]);
 
 

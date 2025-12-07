@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { useServiceRequest } from '@/hooks/useServiceRequest';
 import { useUser } from '@/hooks/useUser';
@@ -27,11 +27,12 @@ export default function Service() {
   } = useServiceRequest();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileListRef = useRef<HTMLDivElement>(null);
 
 
   /* ___ Handle Closing ___ */
   const handleClose = () => {
-    if ((issue.trim() !== '') || (files.length !== 0)) {
+    if (issue.trim() || files.length > 0) {
       toast('Issue saved as draft');
     }
 
@@ -44,16 +45,8 @@ export default function Service() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();	// prevent page refresh
 
-    // Check if issue is empty
-    if (issue.trim() === '') {
-      toast.error('Write your issue first');
-      return;
-    }
-
-    // Toast
     toast.success('Your issue sent successfully');
 
-    // Close
     setClosing(true); // start animation
     setTimeout(() => {
       toggleServicePanel(); // close panel
@@ -65,16 +58,28 @@ export default function Service() {
 
   /* ___ Handle File Change ___ */
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files) {
-      setFiles([...files, ...Array.from(e.target.files)]);
-      
-      /*
-        The above code can be broken down into simpler steps
-        const newFiles = Array.from(e.target.files); // get the new files selected by the user
-        const updatedFiles = [...files, ...newFiles]; // keep the old files and add the new ones
-        setFiles(updatedFiles); // update the state with the new file list:
-      */
-    }
+    if (!e.target.files) return;
+
+    // Get selected files
+    const newFiles = Array.from(e.target.files);
+
+    // Get unique files
+    const unique = newFiles.filter(
+      f => !files.some(ex => 
+        ex.name === f.name &&
+        ex.size === f.size &&
+        ex.lastModified === f.lastModified
+      )
+    );
+
+    // Add to files
+    setFiles([...files, ...unique]);
+
+    // Scroll file list to bottom
+    fileListRef.current?.scrollTo({
+      top: fileListRef.current.scrollHeight,
+      behavior: 'smooth'
+    });
   }
 
 
@@ -109,6 +114,7 @@ export default function Service() {
           {/* Textarea */}
           <textarea
             value={issue}
+            maxLength={2000}
             placeholder="Describe your issue..."
             onChange={(e) => setIssue(e.target.value)}
           />
@@ -116,7 +122,7 @@ export default function Service() {
           {/* File Upload */}
           <div className="file-upload">
             {/* Display uploaded file names */}
-            <div className="uploaded-files">
+            <div className="uploaded-files" ref={fileListRef}>
               <p style={{display: files.length === 0 ?"block" :"none"}}>Upload File</p> {/* placeholder */}
               {files.map((file, index) => (
                 <div key={index} className="file-item">
@@ -139,7 +145,13 @@ export default function Service() {
           </div>
 
           {/* Submit Button */}
-          <button type="submit" className="submit-btn">Submit</button>
+          <button 
+            type="submit" 
+            className="submit-btn"
+            disabled={issue.trim() === ''}
+          >
+            Submit
+          </button>
         </form>
 
       </div>

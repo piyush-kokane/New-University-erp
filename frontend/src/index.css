@@ -460,6 +460,11 @@ button {
     background-color: var(--btn-hover-color);
   }
 
+  &:disabled {
+    background-color: rgb(150, 150, 150);
+    cursor: not-allowed;
+  }
+
   &:focus,
   &:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
