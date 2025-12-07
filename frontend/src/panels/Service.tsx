@@ -31,6 +31,10 @@ export default function Service() {
 
   /* ___ Handle Closing ___ */
   const handleClose = () => {
+    if ((issue.trim() !== '') || (files.length !== 0)) {
+      toast('Issue saved as draft');
+    }
+
     setClosing(true); // start animation
     setTimeout(toggleServicePanel, 200); // delay must match animation duration (0.2s) // call close function after animation
   };
@@ -87,9 +91,10 @@ export default function Service() {
 
   /* ====== UI ====== */
   return (
-    <div className={`bg-blur ${closing ? 'fade-out' : 'fade-in'}`}>
+    <div className={`bg-blur ${closing ? 'fade-out' : 'fade-in'}`} onClick={handleClose}>
       <div
         className={`service-panel ${closing ? 'slide-out' : 'slide-in'}`}
+        onClick={e => e.stopPropagation()}
       >
 
         {/*** CLOSE BUTTON ***/}
@@ -112,7 +117,7 @@ export default function Service() {
           <div className="file-upload">
             {/* Display uploaded file names */}
             <div className="uploaded-files">
-              <p style={{display: files.length == 0 ?"block" :"none"}}>Upload File</p> {/* placeholder */}
+              <p style={{display: files.length === 0 ?"block" :"none"}}>Upload File</p> {/* placeholder */}
               {files.map((file, index) => (
                 <div key={index} className="file-item">
                   <span className="material-icons" onClick={() => handleRemoveFile(index)}>close</span>
