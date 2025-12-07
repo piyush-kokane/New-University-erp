@@ -192,7 +192,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   /* ====== Return ====== */
   return (
-    <UserContext.Provider value={{ user, loggingIn, loggingOut, setLoggingOut, login, logout }}>
+    <UserContext.Provider value={{
+      user,
+      loggingIn,
+      loggingOut,
+      setLoggingOut,
+      login,
+      logout
+    }}>
       {children}
     </UserContext.Provider>
   );

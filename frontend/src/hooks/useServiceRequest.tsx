@@ -24,14 +24,12 @@ export const ServiceRequestProvider = ({ children }: { children: ReactNode }) =>
 
 
   return (
-    <ServiceRequestContext.Provider
-      value={{
-        issue,
-        files,
-        setIssue,
-        setFiles,
-      }}
-    >
+    <ServiceRequestContext.Provider value={{
+      issue,
+      files,
+      setIssue,
+      setFiles,
+    }}>
       {children}
     </ServiceRequestContext.Provider>
   );

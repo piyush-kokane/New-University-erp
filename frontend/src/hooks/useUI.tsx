@@ -46,23 +46,21 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   /* ====== Return ====== */
   return (
-    <UIContext.Provider
-      value={{
-        activePage,
-        sidebarOpen,
-        profilePanel,
-        notificationPanel,
-        settingsPanel,
-        servicePanel,
-        toggleSidebar,
-        toggleProfilePanel,
-        toggleNotificationPanel,
-        toggleSettingsPanel,
-        toggleServicePanel,
-        setSidebarOpen,
-        setActivePage,
-      }}
-    >
+    <UIContext.Provider value={{
+      activePage,
+      sidebarOpen,
+      profilePanel,
+      notificationPanel,
+      settingsPanel,
+      servicePanel,
+      toggleSidebar,
+      toggleProfilePanel,
+      toggleNotificationPanel,
+      toggleSettingsPanel,
+      toggleServicePanel,
+      setSidebarOpen,
+      setActivePage,
+    }}>
       {children}
     </UIContext.Provider>
   );
