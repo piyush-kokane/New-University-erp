@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { useServiceRequest } from '@/hooks/useServiceRequest';
 import { useUser } from '@/hooks/useUser';
@@ -94,6 +94,13 @@ export default function Service() {
   }
 
 
+  /* ___ Open File In New Tab ___ */
+  function openFile(file: File) {
+    const url = URL.createObjectURL(file);
+    window.open(url, "_blank");
+  }
+
+
   /* ====== UI ====== */
   return (
     <div className={`bg-blur ${closing ? 'fade-out' : 'fade-in'}`} onClick={handleClose}>
@@ -126,8 +133,9 @@ export default function Service() {
               <p style={{display: files.length === 0 ?"block" :"none"}}>Upload File</p> {/* placeholder */}
               {files.map((file, index) => (
                 <div key={index} className="file-item">
-                  <span className="material-icons" onClick={() => handleRemoveFile(index)}>close</span>
+                  <span className="material-icons delete" onClick={() => handleRemoveFile(index)}>close</span>
                   <p>{file.name}</p>
+                  <span className="material-symbols-rounded" onClick={() => openFile(file)}>arrow_outward</span>
                 </div>
               ))}
             </div>
